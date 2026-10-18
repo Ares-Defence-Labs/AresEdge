@@ -1,8 +1,4 @@
-<p align="center">
-  <a href="https://aresdefencelabs.com">
-    <img src="branding/ares-defence-labs.png" alt="Ares Defence Labs" width="404">
-  </a>
-</p>
+[![Ares Defence Labs](./branding/ares-defence-labs-banner.png)](https://aresdefencelabs.com)
 
 # AresEdge
 
