@@ -24,6 +24,6 @@ has additional editing tools which are separate from this SDK release.
 ## Try and measure
 
 Install [AresScan+](https://aresdefencelabs.com/ares-scan) to try the app, or run the
-[example project](../example/README.md) to try the actual public SDK widgets.
+[example project](example-project.md) to try the actual public SDK widgets.
 Use the [performance workbench](performance-testing.md) to benchmark camera
 throughput and detector latency on your hardware.

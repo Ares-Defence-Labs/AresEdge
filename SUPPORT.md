@@ -1,7 +1,7 @@
 # Support and purchasing
 
 Read [getting started](docs/getting-started.md), the [API reference](docs/api-reference.md)
-and [troubleshooting](docs/platforms.md). This is the public documentation/example
+and [troubleshooting](docs/platforms.md). This is the public documentation-only
 repository, not the SDK implementation package.
 
 Use GitHub Issues for bugs, integration questions and feature requests. Include

@@ -7,7 +7,7 @@ keys use the normal 60-second process trial; use a valid key for longer runs.
 
 ## Run
 
-Follow [example setup](../example/README.md) to point the dependency override at
+Follow [example setup](example-project.md) to point the dependency override at
 the supplied customer SDK. Use a physical Android or iOS device:
 
 ```sh

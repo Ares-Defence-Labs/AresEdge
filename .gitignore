@@ -1,4 +1,4 @@
-# Flutter example build outputs and local SDK paths
+# Exclude local tooling, SDK paths and generated files from public documentation
 **/.dart_tool/
 **/build/
 **/.flutter-plugins*
@@ -23,5 +23,5 @@
 **/*licence*.json
 .DS_Store
 
-# No local SDK path lockfiles in this unpublished example
+# Local dependency lockfiles do not belong in the documentation repository
 **/pubspec.lock

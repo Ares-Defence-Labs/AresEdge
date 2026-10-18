@@ -3,8 +3,15 @@
 # AresEdge
 
 > **Commercial SDK — paid licence required for production use.**
-> AresEdge is proprietary software from Ares Defence Labs. A free 60-second trial
-> is available for evaluation.
+> AresEdge is proprietary software from Ares Defence Labs. Developers are free
+> to trial the SDK for evaluation. Without a valid licence, the SDK deactivates
+> after 60 seconds during a live session.
+>
+> Before deploying to real customers, purchase a licence key from the portal
+> and paste it into your application’s source code or private build configuration.
+> One licence covers unlimited apps across all SDK-supported platforms. You must
+> ship the renewed key in every app before the current key expires; otherwise,
+> customers running an expired key see the trial popup and session lock.
 >
 > [Purchase a licence](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview) · [Read the commercial licence](LICENSE)
 
@@ -53,10 +60,11 @@ AresEdgeEmbedded, or use the compact AresEdgeScreen.
 
 ## Run the performance workbench
 
-The [example project](example/README.md) includes a **Performance workbench** for
+The SDK [example project](docs/example-project.md) includes a **Performance workbench** for
 real Android/iOS devices. Select analysis quality and overlay policy, collect
 capture latency and Flutter frame timings, then copy a JSON report for comparisons.
-The normal offline licence checks and 60-second trial still apply.
+The normal offline licence checks and 60-second trial still apply. Download the
+customer SDK package and open its included example before running these commands.
 
 ```sh
 # After configuring the local SDK path in example/pubspec_overrides.yaml:
@@ -75,8 +83,8 @@ matrix, measurement definitions and report-comparison script, and
 [visual demos](docs/visual-demos.md) for media sources and feature scope.
 
 **Release status:** the `ares_edge` customer package is being prepared and is not
-published to pub.dev. This repository contains documentation and a runnable host
-example, not the proprietary implementation or a downloadable SDK binary. Obtain
+published to pub.dev. This repository contains documentation only. The runnable example is included
+in the SDK package; implementation source and build tooling remain private. Obtain
 a local customer package from Ares Defence Labs before running the example.
 
 - [Installation and quick start](docs/getting-started.md)
@@ -87,7 +95,7 @@ a local customer package from Ares Defence Labs before running the example.
 - [Platform setup and troubleshooting](docs/platforms.md)
 - [Video demos and screenshots](docs/visual-demos.md)
 - [Performance workbench](docs/performance-testing.md)
-- [Example application](example/README.md)
+- [Example application](docs/example-project.md)
 - [Purchase a licence](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview)
 - [Report a bug or ask a question](https://github.com/Ares-Defence-Labs/AresEdge/issues)
 
@@ -106,7 +114,7 @@ flutter run --dart-define=ARES_EDGE_LICENCE=YOUR_PORTAL_ISSUED_LICENCE_KEY
 ```
 
 Keys verify offline. Missing, invalid or expired keys use the shared 60-second
-process trial. Do not commit a real key to this public example/repository.
+process trial. Do not commit a real key to the public documentation repository.
 
 ## Ready-made scanner: AresEdgeScreen
 

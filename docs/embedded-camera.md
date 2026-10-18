@@ -55,7 +55,7 @@ class _CustomScannerState extends State<CustomScanner> {
 ```
 
 Import `package:ares_edge/ares_edge.dart` and Flutter material for this snippet.
-See the [complete example](../example/lib/main.dart) for both integration styles.
+See the [complete example](example-project.md) for both integration styles.
 
 ## Controls and lifetime
 

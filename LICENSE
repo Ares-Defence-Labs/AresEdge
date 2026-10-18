@@ -10,22 +10,24 @@ invoice or portal checkout (Order). "Licensee" is the person or entity accepting
 these terms. By installing, copying or using the Software, Licensee accepts this
 Agreement. A person accepting for an entity represents that they can bind it.
 If Licensee does not accept, it must not use or distribute the Software.
-An Order accepted by Licensor may specify application identifiers, platforms,
-products, fees, term, permitted developers and additional rights. A conflicting
+An Order accepted by Licensor may specify products, fees, term, permitted
+developers and additional rights. A conflicting
 express provision of that Order controls; otherwise this Agreement applies.
 
 2. COMMERCIAL GRANT
 Subject to payment, the Order and compliance with this Agreement, Licensor grants
 Licensee a limited, non-exclusive, non-transferable licence during the authorised
 term to install and use the Software for developing, testing and maintaining the
-applications specified in the Order, and to distribute the Software solely in
-compiled form as an integral part of those applications to their end users.
+an unlimited number of Licensee's applications across every platform supported
+by the Software, using the same customer licence key, and to distribute the
+Software solely in compiled form as an integral part of those applications to
+their end users. No separate per-app or per-platform licence purchase is required.
 End users may run the incorporated Software only as part of the authorised app
 and only while the applicable entitlement permits. No independent SDK licence
 or sublicensing right is granted to end users. Contractors may use the Software
 solely for Licensee's authorised work and under equivalent confidentiality and
-use restrictions; Licensee remains responsible for their compliance. Affiliates,
-additional apps and additional products require express coverage in the Order.
+use restrictions; Licensee remains responsible for their compliance. Affiliates
+and additional SDK products require express coverage in the Order.
 No ownership, exclusivity or source-code delivery is granted.
 
 3. EVALUATION
@@ -40,16 +42,19 @@ by Licensor, superseded by an Order, or terminated under this Agreement.
 4. TERM, KEYS AND RENEWAL
 Unless an Order states otherwise, paid customer entitlements last twelve months
 from their signed term start and end on their signed expiry date. Offline
-verification does not extend the term. Licence keys are specific to permitted
-applications, platforms and products. They must not be shared outside authorised
-development and distribution of those applications. Licensor alone issues keys.
+verification does not extend the term. Customer licence keys cover the purchased
+SDK product across unlimited Licensee applications on all platforms supported by that SDK. They must not be
+shared outside authorised development and distribution of those applications. Licensor alone issues keys.
 Renewal, automatic billing, amounts, taxes, cancellation and refunds are governed
 by the accepted Order and checkout terms, subject to mandatory law. Where renewal
 is arranged approximately thirty days before expiry, Licensee must incorporate
-the replacement key and distribute updated applications before the old key
-expires. Existing app installations containing an expired key may enter trial
-or lose protected functionality. There is no implied grace period after expiry
-and no guarantee that an already distributed app can operate perpetually.
+the replacement key in every application using the Software and distribute
+updated applications to customers on every supported platform before the old key
+expires, allowing time for store review, rollout and installation. Renewal does
+not replace keys in installed apps automatically. Existing app installations
+containing an expired key enter trial, display the trial notice and lose protected
+functionality after the live-session trial allowance. There is no implied grace
+period after expiry and no guarantee that an already distributed app can operate perpetually.
 Non-expiring owner entitlements, if expressly issued, are limited to their signed
 scope and do not grant general customer, resale or transfer rights.
 

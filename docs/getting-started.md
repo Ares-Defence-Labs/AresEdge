@@ -4,8 +4,12 @@
 
 AresEdge is a commercial SDK. Purchase through the
 [AresEdge portal](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview).
-Copy the signed licence string for your application from the portal. Configure it
-in developer source or a build define, never an end-user activation dialog.
+Copy your signed customer licence key from the portal. One licence covers an
+unlimited number of your apps across all SDK-supported platforms (currently
+Android and iOS). Configure the same key in developer source or a private build
+define, never an end-user activation dialog. Replace it in every app and distribute
+updates before its expiry; older installations with an expired key show the trial
+popup and are subject to the live-session trial lock. See [licensing and renewal](licensing.md).
 
 The planned pub.dev name is `ares_edge`. It has not been published. For now use
 the supplied **customer binary package**, not this documentation repository:

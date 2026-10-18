@@ -1,11 +1,17 @@
 # Commercial licensing and offline verification
 
 Purchase [AresEdge](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview)
-and copy the application-specific signed key from the portal. Pass it through the
-`licenceKey` field in developer source/build configuration. End users do not enter
-keys in the application. The SDK verifies signatures, product, permitted app and
-platform identity, start date and customer expiry locally. No activation HTTP
-request or periodically renewed device lease is required.
+and copy your signed customer licence key from the portal. One AresEdge customer
+licence covers an unlimited number of your apps on every platform supported by
+the SDK. The same key can be used across those apps and platforms; there is no
+per-app or per-platform licence purchase. AresEdge currently supports Android and
+iOS. This does not include licences for other SDK products or permit resale or
+sharing of your licence with other developers or organisations.
+
+Pass the key through the `licenceKey` field in developer source or private build
+configuration. End users do not enter keys in the application. The SDK verifies
+the signature, SDK product, signed customer entitlement, start date and expiry
+locally. No activation HTTP request or periodically renewed device lease is required.
 
 ## Trial
 
@@ -21,19 +27,31 @@ access separately from the notice. Restart the app to test a fresh process trial
 
 Customer entitlement runs for the signed 12-month term. The portal manages
 purchasing/billing and renewal. The intended renewal cycle charges/issues the
-replacement one month before expiry, giving the developer about 30 days to update
-the key in source/build configuration and distribute an app update. This does not
-create an extra grace month after expiry. Customers running an app with the old
-expired token enter trial until they receive an app update containing a valid key.
-The SDK does not charge users, fetch replacement keys or silently renew an old
-embedded token. Billing availability/terms are governed by the portal/order.
+replacement one month before expiry, giving the developer about 30 days to ship
+updates. Renewal issues a replacement licence key; it does not update keys already
+embedded in distributed apps.
+
+You are responsible for copying the renewed key from the portal, replacing it in
+the source or private build configuration of every app using AresEdge, and shipping
+those updates to customers on every supported platform before the current key
+expires. Allow time for store review, rollout and customers installing the update.
+The existing signed key remains valid until its own expiry; receiving a new key
+does not update or extend it automatically.
+
+If a customer device still runs an app containing an expired key, the SDK enters
+trial mode: customers see the trial popup and protected scanning deactivates after
+the 60-second live-session allowance. Dismissing the popup does not unlock the SDK.
+Access returns when the installed app contains a valid key. There is no extra
+grace month after expiry. The SDK does not charge end users, fetch replacement
+keys or silently renew an embedded token. Billing terms are governed by the
+portal/order.
 
 ## Owner access
 
 AresScan's non-expiring owner entitlement is signed and restricted to its allowed
 apps/platforms/products and signing identities. It is not a magic admin string.
-No owner/admin key is included in this repository or example. Other applications
-must purchase their own applicable customer licence.
+No owner/admin key is included in this repository or example. Customer integrations use a purchased customer licence, which covers all of the
+licensee's apps across supported platforms.
 
 ## Security limits
 
