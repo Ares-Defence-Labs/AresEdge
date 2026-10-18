@@ -19,8 +19,46 @@ Commercial document scanning for Flutter by Ares Defence Labs.
 
 Embed a native camera and configurable edge overlay with **AresEdgeEmbedded**, or
 open **AresEdgeScreen** for a minimal back/torch/capture/gallery interface. The
-scanner returns original image bytes to your app. Image editing is planned for
-a later release.
+scanner returns a cropped, perspective-corrected document to your app without
+opening an editor. Interactive editing is planned for a later release.
+
+Automatic scanning follows AresScan: hold a confident document steady, watch
+its two-second countdown, and receive the cropped document. Moving the document or
+losing reliable detection cancels capture. Set `autoCapture: false` for manual
+shutter control. The embedded widget exposes `onScanStateChanged` so your own UI
+can show the hold/countdown state.
+
+
+## Overlay appearance and device override
+
+The same options work with `AresEdgeEmbedded` and `AresEdgeScreen`:
+
+```dart
+const options = AresEdgeOptions(
+  overlayColor: Color(0xFF00FFD1), // Corners, perimeter and document tint.
+  gridColor: Color(0x66FFFFFF), // Grid, including alpha.
+  captureTraceColor: Color(0xFFFFB74D), // Animated capture-countdown border.
+  forceEdgeOverlay: false, // Default: let the SDK select the device policy.
+);
+```
+
+Set `forceEdgeOverlay: true` to override the hardware guard and enable continuous
+tracking and moving overlay animation on devices that would normally use the
+fixed-outline fallback. This can increase processing load; compare native camera
+FPS, inference timings and frame performance in the workbench on your target
+devices. The override does not bypass detection confidence, motion cancellation,
+camera permissions or the licence/trial lock.
+
+`gridColor` respects alpha; use `Colors.transparent` to hide the grid.
+`captureTraceColor: null` follows `overlayColor` at the default trace opacity;
+a supplied colour respects its own alpha. It colours the border that traces the
+document during the capture countdown. It does not colour the photo returned to
+your app. Rebuild with new options to change colours. Changing
+`forceEdgeOverlay` restarts the camera and clears the pending capture countdown.
+
+AresScan+ will use the same published `ares_edge` package and public scanner API
+as other applications when the package launches. Its owner entitlement changes
+licensing only; it does not select a separate scanner implementation.
 
 ## Try AresEdge in AresScan+
 
@@ -63,8 +101,7 @@ AresEdgeEmbedded, or use the compact AresEdgeScreen.
 The SDK [example project](docs/example-project.md) includes a **Performance workbench** for
 real Android/iOS devices. Select analysis quality and overlay policy, collect
 capture latency and Flutter frame timings, then copy a JSON report for comparisons.
-The normal offline licence checks and 60-second trial still apply. Download the
-customer SDK package and open its included example before running these commands.
+The normal offline licence checks and 60-second trial still apply.
 
 ```sh
 # After configuring the local SDK path in example/pubspec_overrides.yaml:
@@ -113,8 +150,15 @@ const licenceKey = String.fromEnvironment('ARES_EDGE_LICENCE');
 flutter run --dart-define=ARES_EDGE_LICENCE=YOUR_PORTAL_ISSUED_LICENCE_KEY
 ```
 
-Keys verify offline. Missing, invalid or expired keys use the shared 60-second
-process trial. Do not commit a real key to the public documentation repository.
+Keys verify offline and cover unlimited apps on Android and iOS. Pass the full
+signed key, not the portal's licence ID. Missing, invalid or expired keys use the
+shared process trial and deactivate scanning after 60 seconds of a live session.
+Do not commit a real key to this public example/repository.
+
+**Sandbox keys require a sandbox-trusted test build.** The production package
+rejects sandbox keys; use a production-portal key for production apps. See
+[offline licensing and renewal](docs/licensing.md) for environments, expiry and
+how to distribute replacement keys before customers encounter the trial lock.
 
 ## Ready-made scanner: AresEdgeScreen
 
@@ -137,8 +181,9 @@ Future<void> scanDocument(BuildContext context) async {
 ```
 
 The screen includes back, flashlight, capture and gallery controls. Capturing or
-selecting an image returns its original bytes directly to the calling app. No
-editor, filters or perspective correction are included in this release.
+selecting an image returns its detected document, cropped and perspective-corrected,
+directly to the calling app. No Cropper/ImageCapture page, filter tools or editor
+is opened. `DOCUMENT_NOT_FOUND` keeps the scanner available for another attempt.
 
 ## Custom camera: AresEdgeEmbedded
 
@@ -183,7 +228,8 @@ class _CustomScannerState extends State<CustomScanner> {
           overlayColor: Colors.orange,
         ),
         onCapture: (image) {
-          // Return the original image to your app.
+          // image.bytes contains the extracted document.
+          // image.isDocumentCropped is true; image.width/height describe the output.
           // Save image.bytes, or return them to your calling route:
           if (mounted) Navigator.of(context).pop(image.bytes);
         },
@@ -227,3 +273,18 @@ required. Only one SDK camera can be active at a time.
 A commercial licence is required for production use. Downloading the example,
 viewing source wrappers, or obtaining binaries does not grant a free production
 licence. See [LICENSE](LICENSE). Third-party components retain their own terms.
+
+## Document extraction
+
+Both camera capture and gallery import extract the detected document by default.
+The native core crops to the four detected corners, corrects perspective and
+returns compressed image bytes directly. No ImageCapture/Cropper page or filter
+UI is opened. A missing usable boundary reports `DOCUMENT_NOT_FOUND`, so your app
+can ask the user to align the document and try again.
+
+`AresEdgeOptions(maxDocumentDimension: 1600)` sets the maximum output side in
+pixels (256–4096); extraction never upscales. Round documents use transparent PNG
+outside the detected disc; rectangular documents normally use JPEG. Embedded
+callbacks also expose `image.isDocumentCropped`, `image.width` and `image.height`.
+Use `extractDocument: false` only when you explicitly want the full image for your
+own processing. This flag does not open an editor.

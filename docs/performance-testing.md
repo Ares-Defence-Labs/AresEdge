@@ -29,7 +29,7 @@ Stop unmounts the camera; backgrounding also ends the measurement session.
 
 | Metric | Meaning |
 | --- | --- |
-| Capture callback p50/p95/mean | Monotonic time from pressing Measure capture until onCapture returns original encoded bytes; includes native still capture, SDK/channel transport, byte-copy and Dart callback scheduling. |
+| Capture callback p50/p95/mean | Monotonic time from pressing Measure capture until onCapture returns document output bytes; includes native capture and document extraction, SDK/channel transport, byte-copy and Dart callback scheduling. |
 | Capture byte sizes | Encoded output sizes, with image contents immediately discarded. |
 | Flutter build/raster p50/p95/mean | FrameTiming samples supplied by Flutter after warm-up. Includes the host UI and instrumentation overhead. |
 | Flutter frames over budget | Retained frames where build or raster exceeds 1000 / selected target refresh Hz. This is an observation, not an OS dropped-frame count. |
@@ -78,7 +78,8 @@ A static native camera preview can produce few Flutter frames even while its
 camera stream is smooth: Flutter sample counts are not camera frame rates.
 Capture request acknowledgement is not capture completion; only onCapture ends
 the measured interval. Startup/permission failures are reported as errors.
-The scanner returns original bytes; measurements do not include host-app image processing.
+The scanner returns the extracted document by default; capture measurements include
+native extraction but exclude additional host-app processing.
 
 Copied reports contain environment/configuration, timings and byte sizes, without
 licence keys, image content or filesystem paths. The optional device label is
@@ -94,8 +95,8 @@ This harness never uploads reports. Copy report JSON after stopping so it is sta
 | Overlay | Device policy; forced continuous overlay; outlines hidden. |
 | Scene | Same printed page, fixed distance, bright / dim light, flat / tilted. |
 | Lifetime | First open, warmed camera, repeated captures, background/reopen. |
-| Licensing | Valid key; missing/expired/wrong-app key, including the trial boundary. |
-| UI | Both scanner presentation modes; capture and gallery return original images. |
+| Licensing | Valid customer key in multiple apps; missing/expired/wrong-product or wrong-environment key, including the trial boundary. Owner grants additionally require their bound app/signer. |
+| UI | Both scanner presentation modes; capture and gallery return extracted documents. |
 
 Keep OS, display refresh rate, power mode, battery/thermal conditions, lighting,
 document framing and app build mode consistent. Label each run. Cool the device
@@ -116,3 +117,6 @@ For native camera/CPU/GPU profiling use the platform profilers (Android Studio
 Profiler/Perfetto and Xcode Instruments). Flutter's DevTools performance view
 helps explain Flutter frame work. See the official
 [Flutter profiling guide](https://docs.flutter.dev/perf/ui-performance).
+
+The workbench disables automatic capture while measuring sustained inference.
+Use its manual shutter to measure capture latency separately.

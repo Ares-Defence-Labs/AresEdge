@@ -11,13 +11,13 @@ final bytes = await AresEdgeScreen.open(
   options: const AresEdgeOptions(autoCapture: false),
 );
 if (bytes == null) return;
-// Save the original image, display it, or pass it to your own processing flow.
+// Save the cropped document, display it, or pass it to your own processing flow.
 ```
 
-Capture and gallery selection return original compressed image bytes directly.
-No editor, cropping, filtering or perspective correction is included in this
-release. The edge overlay guides capture; it does not modify the returned image.
-Image editing is planned for a later release.
+Camera capture and gallery selection return the detected document, cropped and
+perspective-corrected in the native core. No ImageCapture/Cropper screen or filter
+UI is opened. A missing boundary reports DOCUMENT_NOT_FOUND and keeps the scanner
+available. Set extractDocument:false only to request the full image explicitly.
 
 To provide your own route:
 
@@ -40,3 +40,12 @@ native access after the picker returns.
 The compatibility `EdgeDetectionSdk.openActivity` entry point opens a separate
 Android Activity. New integrations should use the documented AresEdge widgets;
 `AresEdgeScreen.open` itself does not launch a second Android Activity.
+
+### AresScan capture behaviour
+
+The default is automatic capture: a confident hold followed by a two-second
+countdown, with the same movement cancellation and detector-freshness rules as
+AresScan. The screen displays the current prompt/countdown. Its manual shutter
+can still capture immediately. The cropped document returns to the calling route;
+there is no editor in this version. Choose `autoCapture: false` for manual-only
+operation.

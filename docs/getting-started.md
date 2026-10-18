@@ -4,7 +4,9 @@
 
 AresEdge is a commercial SDK. Purchase through the
 [AresEdge portal](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview).
-Copy your signed customer licence key from the portal. One licence covers an
+Copy the full signed customer licence key from the portal, not its licence ID.
+Sandbox keys require a sandbox-trusted test build; the production package accepts
+production-issued keys. One licence covers an
 unlimited number of your apps across all SDK-supported platforms (currently
 Android and iOS). Configure the same key in developer source or a private build
 define, never an end-user activation dialog. Replace it in every app and distribute
@@ -47,8 +49,8 @@ Future<void> scan(BuildContext context) async {
 }
 ```
 
-Capture or gallery selection returns the original image bytes directly, without
-an editor or image processing. Cancellation or trial expiry returns null. The
+Capture or gallery selection returns cropped, perspective-corrected document
+bytes directly, without navigating through an editor. Cancellation or trial expiry returns null. The
 result has no SDK-managed persistent file.
 
 ## Licence at build time

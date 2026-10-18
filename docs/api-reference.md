@@ -7,18 +7,23 @@ of this entry point. All widgets require Flutter material and Android/iOS.
 ## AresEdgeOptions
 
 `const AresEdgeOptions({bool forceEdgeOverlay = false, bool showEdgeOverlay = true,
-Color overlayColor = const Color(0xFF00FFD1), AresEdgeQuality quality =
+Color overlayColor = const Color(0xFF00FFD1),
+Color gridColor = const Color(0x47FFFFFF), Color? captureTraceColor,
+AresEdgeQuality quality =
 AresEdgeQuality.balanced, AresEdgeShape shape = AresEdgeShape.rectangle,
-bool autoCapture = false, bool flashEnabled = false})`
+bool autoCapture = true, bool flashEnabled = false, bool extractDocument = true,
+int maxDocumentDimension = 1600})`
 
 | Property | Meaning |
 | --- | --- |
-| forceEdgeOverlay | Force continuous overlay instead of automatic device policy. Does not enable auto-capture. |
+| forceEdgeOverlay | False uses device policy; true overrides eligibility for continuous tracking and moving animation, including fallback devices. Does not bypass capture readiness or licensing. |
 | showEdgeOverlay | Show/hide outline; detection still runs when hidden. |
-| overlayColor | ARGB outline colour. |
+| overlayColor | Detected corners, perimeter and document tint colour. |
+| gridColor | Rule-of-thirds grid ARGB colour, including alpha. Default translucent white (`0x47FFFFFF`); transparent hides it. |
+| captureTraceColor | Capture-countdown border trace ARGB colour, including alpha. Null follows overlayColor at the default trace opacity; transparent hides it. |
 | quality | Requested analysis detail/resolution; device capability still applies. |
 | shape | Detection/crop geometry. |
-| autoCapture | Capture stable detections automatically; false requires controller/button. |
+| autoCapture | AresScan capture hold and two-second countdown by default; false selects manual capture. |
 | flashEnabled | Initial torch request; a changed value on rebuild updates the torch. |
 
 `AresEdgeQuality`: `low`, `balanced`, `high`.
@@ -45,8 +50,8 @@ Listeners are notified around commands. One active camera/controller per SDK.
 
 ## AresEdgeImage
 
-Callback result with `Uint8List bytes`: a defensive, unmodifiable copy of original
-compressed image bytes. No public constructor, native geometry or mutable SDK
+Callback result with `Uint8List bytes`: a defensive, unmodifiable copy of cropped
+document bytes by default. No public constructor, native geometry or mutable SDK
 state is exposed. Persist bytes in your own storage if needed after navigation.
 
 ## AresEdgeEmbedded extends StatefulWidget
@@ -54,14 +59,15 @@ state is exposed. Persist bytes in your own storage if needed after navigation.
 `const AresEdgeEmbedded({Key? key, required AresEdgeController controller,
 required FutureOr<void> Function(AresEdgeImage image) onCapture, String? licenceKey,
 AresEdgeOptions options = const AresEdgeOptions(), ValueChanged<String>? onError,
-VoidCallback? onLicenceRequired, ValueChanged<AresEdgePerformance>? onPerformance})`
+VoidCallback? onLicenceRequired, ValueChanged<AresEdgePerformance>? onPerformance,
+ValueChanged<AresEdgeScanState>? onScanStateChanged})`
 
 | Member | Contract |
 | --- | --- |
 | controller | Host controls; attach to one embedded widget only. |
-| licenceKey | Developer-configured signed key or null for trial; verified offline. |
+| licenceKey | Full portal-issued signed key, not the licence ID; null for trial. Verified offline. Customer keys cover unlimited Android/iOS apps. Sandbox keys require a sandbox-trusted build. |
 | options | Immutable camera and overlay settings. |
-| onCapture | Original image. Async callbacks are serialised; duplicate callbacks while processing are ignored. |
+| onCapture | Extracted document. Async callbacks are serialised; duplicate callbacks while processing are ignored. |
 | onError | Native/status errors and capture callback failures; host decides presentation. |
 | onLicenceRequired | Camera access expired; preview already stopped/replaced. |
 | onPerformance | Optional native measurement windows; null disables collection/transport. |
@@ -87,7 +93,7 @@ ValueChanged<AresEdgePerformance>? onPerformance})`
 `static Future<Uint8List?> open(BuildContext context, {String? licenceKey,
 AresEdgeOptions options = const AresEdgeOptions(),
 ValueChanged<AresEdgePerformance>? onPerformance})`
-opens a fullscreen-dialog Flutter route. Await original compressed image bytes or null.
+opens a fullscreen-dialog Flutter route. Await cropped document bytes or null.
 Check context.mounted before subsequent navigation. Back dismisses the screen;
 picker cancellation returns to scanning. Available controls: back, torch,
 capture and gallery. Unsupported platforms throw UnsupportedError from native view
@@ -125,3 +131,22 @@ Flutter redraws or reciprocal inference latency. See [benchmarking](performance-
 use the AresEdge entry point above. Do not mix the owner/source implementation's
 private APIs with the customer binary package. Its old enum/signature differences
 are intentionally hidden by the AresEdge API.
+
+### Capture state
+
+`AresEdgeEmbedded.onScanStateChanged` receives an `AresEdgeScanState` with
+`phase` (`searching`, `holding`, `countdown`, `capturing`), `remainingSeconds`
+(zero outside a countdown), and a short `message` for your own UI. Capture is
+confirmed by native detector results; displayed/smoothed points are not capture
+evidence. Continuous mode holds confidence for 1.5 seconds, then counts down two
+seconds. Fallback mode requires repeated settled detections before that countdown.
+
+### Document extraction settings and result
+
+`extractDocument` defaults to true: camera and gallery output is cropped and
+perspective-corrected without an editor route. Missing geometry reports
+`DOCUMENT_NOT_FOUND`. False explicitly returns the full image.
+`maxDocumentDimension` defaults to 1600 pixels, accepts 256–4096 and never upscales.
+`AresEdgeImage.isDocumentCropped`, `width` and `height` describe the result.
+Circular extraction returns PNG with transparent corners; rectangular extraction
+normally returns JPEG. Output orientation is upright with the crop applied.

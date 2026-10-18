@@ -18,6 +18,6 @@ Provide the licence in your own build configuration; no real key is included.
 Without a key you can test the shared 60-second process trial. Use a physical
 device for camera acceptance and profile mode for benchmarking.
 
-Both scanner modes return original image bytes directly. There is no image
+Both scanner modes return cropped document bytes directly. There is no image
 editor in this release. See [performance testing](performance-testing.md) for
 measurement definitions, the device test matrix and JSON comparison commands.

@@ -18,7 +18,7 @@ The document outline and capture countdown are visible in the AresScan scanner.
 This is the host app's complete scanning screen. For your own toolbar, use
 AresEdgeEmbedded. For the SDK's minimal toolbar, use AresEdgeScreen.
 
-The first AresEdge release provides scanning and original image output. AresScan+
+The first AresEdge release provides scanning and cropped, perspective-corrected document output. AresScan+
 has additional editing tools which are separate from this SDK release.
 
 ## Try and measure
