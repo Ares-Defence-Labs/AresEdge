@@ -125,12 +125,28 @@ checks apply as usual. Empty inference samples mean no ONNX measurement occurred
 including classical/tracking-only paths. FPS is not inferred from overlay events,
 Flutter redraws or reciprocal inference latency. See [benchmarking](performance-testing.md).
 
-## Compatibility
+## Public API boundary
 
-`edge_detection_sdk.dart` remains a compatibility adapter. New consumers should
-use the AresEdge entry point above. Do not mix the owner/source implementation's
-private APIs with the customer binary package. Its old enum/signature differences
-are intentionally hidden by the AresEdge API.
+Import only `package:ares_edge/ares_edge.dart`. The customer package exposes:
+
+| Type | Purpose |
+| --- | --- |
+| `AresEdgeEmbedded` | Embedded native camera and edge overlay with your controls. |
+| `AresEdgeScreen` | Ready-made scanner, torch, back and gallery workflow. |
+| `AresEdgeController` | Capture and torch commands for an attached camera. |
+| `AresEdgeOptions` | Overlay, capture, quality, extraction and device-policy settings. |
+| `AresEdgeImage` | Cropped image bytes, dimensions, format and extraction metadata. |
+| `AresEdgeScanState` | Searching, holding, countdown and capturing status. |
+| `AresEdgePerformance` | Native camera FPS and inference timing windows. |
+| `AresEdgeQuality` | Requested camera analysis quality. |
+| `AresEdgeShape` | Document, round-paper or card boundary selection. |
+
+The native channel adapter is a library-private Dart part. It cannot be imported
+as a separate library and its classes cannot be referenced from consumer code.
+There is no customer compatibility `Edge*` library, activation service API,
+`QuadFrame`, editor, cropper screen, identity parser or owner implementation API.
+Document extraction remains internal; it does not require an exposed cropper.
+Pass the purchased licence key through the camera/screen configuration.
 
 ### Capture state
 

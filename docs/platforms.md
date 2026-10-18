@@ -44,7 +44,7 @@ owner delivery scripts or private credentials into a customer integration.
 
 | Symptom | Action |
 | --- | --- |
-| Package not found on pub.dev | It is not published yet; use the supplied local customer binary package. |
+| Package not found on pub.dev | Check the package name `ares_edge`, your network connection and hosted dependency configuration. |
 | MissingPluginException | Stop and fully rebuild after adding the plugin; hot reload cannot register native code. |
 | Camera is not attached | Wait for the preview to mount; controller attachment is not a native-ready signal. Catch command failures during startup. |
 | Camera/permission error | Check privacy declarations and app permission settings. Reopen the scanner after granting permission. |

@@ -42,3 +42,18 @@ Queued scanner work rechecks access before execution and before successful nativ
 result delivery. The customer edition rejects legacy owner AI/video channel calls.
 A process restart resets the evaluation trial by design. Offline wildcard customer
 keys can be shared, cannot be immediately revoked and rely on local time at startup.
+
+
+## Customer offline dependency boundary
+
+Customer native builds exclude owner-only ML Kit image labelling, Play Integrity
+and App Attest implementations. Legacy attestation/challenge/lease channel calls
+return method-not-implemented. Package guards check the actual native artifacts
+for retained Google/DeviceCheck references; the owner source edition keeps its
+separate APIs. User-selected purchase links may open the host browser. These are
+targeted controls, not proof that every host app or OS component is network-silent.
+
+Third-party licences and covered-source references accompany the customer package
+in `THIRD_PARTY_NOTICES.md` and `SOURCE_AVAILABILITY.md`. The unchanged document
+model is the hash-verified DocsaidLab DocAligner FastViT-T8 Apache 2.0 checkpoint;
+its original licence rights survive renaming and encrypted packaging.

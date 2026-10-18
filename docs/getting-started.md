@@ -29,6 +29,10 @@ Do not use a Git dependency pointing at the public documentation repository: it
 is not the SDK package. After an actual release, use the version announced in
 its release notes rather than guessing a hosted version.
 
+Use the single public import `package:ares_edge/ares_edge.dart`. Only the nine
+[scanning API types](api-reference.md#public-api-boundary) are supported; editor,
+cropper and internal adapter APIs are not exposed.
+
 ## Ready-made scanner
 
 ```dart

@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0",
+  "manifest": "ee4d682c289115e6c18e4fa73ff374904f62ec0a3b7ca5e74581a8378f26955b",
+  "packageArchiveSha256": "3a6facfd73e5ca2a154881047fdcb4f4b99f3a8f3af3c3b77b15faa468827af8",
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "SECURITY.md",
+    "branding/app-store.webp",
+    "branding/ares-defence-labs-banner.png",
+    "branding/ares-defence-labs.png",
+    "branding/google-play.webp",
+    "docs/api-reference.md",
+    "docs/embedded-camera.md",
+    "docs/example-project.md",
+    "docs/getting-started.md",
+    "docs/licensing.md",
+    "docs/performance-testing.md",
+    "docs/platforms.md",
+    "docs/scanner-screen.md",
+    "docs/visual-demos.md",
+    "media/README.md",
+    "media/scanner.webp",
+    "media/scanning-demo.gif",
+    "media/scanning-demo.mp4"
+  ]
+}

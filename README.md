@@ -119,10 +119,7 @@ See [performance testing](docs/performance-testing.md) for the repeatable test
 matrix, measurement definitions and report-comparison script, and
 [visual demos](docs/visual-demos.md) for media sources and feature scope.
 
-**Release status:** the `ares_edge` customer package is being prepared and is not
-published to pub.dev. This repository contains documentation only. The runnable example is included
-in the SDK package; implementation source and build tooling remain private. Obtain
-a local customer package from Ares Defence Labs before running the example.
+**Current release:** [ares_edge 2.0.0](https://pub.dev/packages/ares_edge/versions/2.0.0).
 
 - [Installation and quick start](docs/getting-started.md)
 - [Embedded camera and custom controls](docs/embedded-camera.md)
@@ -288,3 +285,11 @@ outside the detected disc; rectangular documents normally use JPEG. Embedded
 callbacks also expose `image.isDocumentCropped`, `image.width` and `image.height`.
 Use `extractDocument: false` only when you explicitly want the full image for your
 own processing. This flag does not open an editor.
+
+### Supported public API
+
+Use `package:ares_edge/ares_edge.dart` for `AresEdgeEmbedded`, `AresEdgeScreen`,
+`AresEdgeController`, `AresEdgeOptions`, `AresEdgeImage`, `AresEdgeScanState`,
+`AresEdgePerformance`, `AresEdgeQuality` and `AresEdgeShape`. Editor/cropper screens,
+activation helpers and native channel adapters are not public customer APIs.
+See the [API reference](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/api-reference.md).

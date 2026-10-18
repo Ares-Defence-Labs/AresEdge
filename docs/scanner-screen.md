@@ -37,15 +37,5 @@ platform privacy declarations for camera and photo-library access.
 Trial expiry is not extended by opening the gallery. The completion path rechecks
 native access after the picker returns.
 
-The compatibility `EdgeDetectionSdk.openActivity` entry point opens a separate
-Android Activity. New integrations should use the documented AresEdge widgets;
-`AresEdgeScreen.open` itself does not launch a second Android Activity.
-
-### AresScan capture behaviour
-
-The default is automatic capture: a confident hold followed by a two-second
-countdown, with the same movement cancellation and detector-freshness rules as
-AresScan. The screen displays the current prompt/countdown. Its manual shutter
-can still capture immediately. The cropped document returns to the calling route;
-there is no editor in this version. Choose `autoCapture: false` for manual-only
-operation.
+Use `AresEdgeScreen.open` for the supported scanner route. Internal native Activity
+bootstrap and legacy adapter classes are not public customer APIs.
