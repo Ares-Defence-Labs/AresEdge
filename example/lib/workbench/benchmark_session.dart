@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:ares_edge/ares_edge.dart';
 
 /// Bounded, in-memory measurements from one real-device workbench session.
 /// Values are observed timings, never simulated camera/inference results.
@@ -13,13 +14,28 @@ class BenchmarkSession {
   final List<double> _captureMs = [];
   final List<int> _captureBytes = [];
   int errors = 0;
+  final List<AresEdgePerformance> _native = [];
+
+  /// Records a native window once; late/duplicate windows are discarded.
+  void recordNative(AresEdgePerformance value) {
+    if (_native.any(
+      (old) =>
+          old.sessionId == value.sessionId && old.sequence >= value.sequence,
+    )) {
+      return;
+    }
+    _append(_native, value, 600);
+  }
 
   /// Retain the most recent samples to bound instrumentation memory.
   static const maxFrameSamples = 10000;
   static const maxCaptureSamples = 100;
 
   void recordFrame({required double buildMs, required double rasterMs}) {
-    if (!buildMs.isFinite || !rasterMs.isFinite || buildMs < 0 || rasterMs < 0) {
+    if (!buildMs.isFinite ||
+        !rasterMs.isFinite ||
+        buildMs < 0 ||
+        rasterMs < 0) {
       return;
     }
     _append(_buildMs, buildMs, maxFrameSamples);
@@ -37,19 +53,39 @@ class BenchmarkSession {
     if (values.length > limit) values.removeRange(0, values.length - limit);
   }
 
-  static Map<String, Object?> _summary(List<double> values) {
+  static Map<String, Object?> _summary(
+    List<double> values, {
+    String suffix = 'Ms',
+  }) {
     if (values.isEmpty) {
-      return {'samples': 0, 'meanMs': null, 'p50Ms': null, 'p95Ms': null};
+      return {
+        'samples': 0,
+        'mean$suffix': null,
+        'p50$suffix': null,
+        'p95$suffix': null,
+      };
     }
     final sorted = [...values]..sort();
     double percentile(double fraction) =>
         sorted[math.max(0, (sorted.length * fraction).ceil() - 1)];
     return {
       'samples': sorted.length,
-      'meanMs': values.reduce((a, b) => a + b) / values.length,
-      'p50Ms': percentile(.5),
-      'p95Ms': percentile(.95),
+      'mean$suffix': values.reduce((a, b) => a + b) / values.length,
+      'p50$suffix': percentile(.5),
+      'p95$suffix': percentile(.95),
     };
+  }
+
+  double? _rate(int Function(AresEdgePerformance) count) {
+    final microseconds = _native.fold<int>(
+      0,
+      (sum, v) => sum + v.window.inMicroseconds,
+    );
+    return microseconds == 0
+        ? null
+        : 1000000 *
+              _native.fold<int>(0, (sum, v) => sum + count(v)) /
+              microseconds;
   }
 
   /// JSON-safe report with no images, paths, licence keys or native secrets.
@@ -60,7 +96,7 @@ class BenchmarkSession {
       (i) => _buildMs[i] > budget || _rasterMs[i] > budget,
     ).where((v) => v).length;
     return {
-      'measurement': 'captureCallbackAndFlutterFrames',
+      'measurement': 'nativeCameraInferenceCaptureAndFlutterFrames',
       'targetRefreshHz': refreshRate,
       'flutterFrameBudgetMs': budget,
       'flutterBuild': _summary(_buildMs),
@@ -72,8 +108,44 @@ class BenchmarkSession {
       'captureCallback': _summary(_captureMs),
       'captureBytes': List<int>.unmodifiable(_captureBytes),
       'errors': errors,
-      'nativeCameraFps': null,
-      'nativeInferenceMs': null,
+      'nativeWindows': _native.length,
+      'nativeWindowMs': _native.fold<double>(
+        0,
+        (sum, v) => sum + v.window.inMicroseconds / 1000,
+      ),
+      'nativeCameraFrames': _native.fold<int>(
+        0,
+        (sum, v) => sum + v.cameraFrames,
+      ),
+      'nativeAnalysisFrames': _native.fold<int>(
+        0,
+        (sum, v) => sum + v.analysisFrames,
+      ),
+      'nativeInferenceRuns': _native.fold<int>(
+        0,
+        (sum, v) => sum + v.inferenceRuns,
+      ),
+      'nativeCameraFps': _rate((v) => v.cameraFrames),
+      'nativeAnalysisFps': _rate((v) => v.analysisFrames),
+      'nativeInferenceFps': _rate((v) => v.inferenceRuns),
+      'nativeCameraFpsStats': _summary(
+        _native.map((v) => v.cameraFps).toList(),
+        suffix: '',
+      ),
+      'nativeInferenceMs': _summary(
+        _native.expand((v) => v.inferenceMs).toList(),
+      ),
+      'nativeProcessingMs': _summary(
+        _native.expand((v) => v.processingMs).toList(),
+      ),
+      'nativePreprocessMs': _summary(
+        _native.expand((v) => v.preprocessMs).toList(),
+      ),
+      'nativeDecodeMs': _summary(_native.expand((v) => v.decodeMs).toList()),
+      'nativeTimingSamplesDropped': _native.fold<int>(
+        0,
+        (sum, v) => sum + v.timingSamplesDropped,
+      ),
     };
   }
 }

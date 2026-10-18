@@ -12,12 +12,12 @@ from pathlib import Path
 
 def read_report(path):
     report = json.loads(path.read_text())
-    if report.get('schemaVersion') != 1 or report.get('measurement') != 'captureCallbackAndFlutterFrames':
+    if report.get('schemaVersion') != 2 or report.get('measurement') != 'nativeCameraInferenceCaptureAndFlutterFrames':
         raise ValueError(f'{path}: unsupported workbench report')
     for key in ['deviceLabel', 'os', 'osVersion', 'buildMode']:
         if not isinstance(report.get(key), str) or not report[key].strip():
             raise ValueError(f'{path}: missing {key}; label the device and conditions before measuring')
-    for key in ['captureCallback', 'flutterBuild', 'flutterRaster']:
+    for key in ['captureCallback', 'flutterBuild', 'flutterRaster', 'nativeInferenceMs', 'nativeProcessingMs', 'nativePreprocessMs', 'nativeDecodeMs']:
         metric = report.get(key)
         if not isinstance(metric, dict) or not isinstance(metric.get('samples'), int) or metric['samples'] < 0:
             raise ValueError(f'{path}: invalid {key} sample count')
@@ -28,8 +28,17 @@ def read_report(path):
                     raise ValueError(f'{path}: empty metric must have null timings')
             elif isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
                 raise ValueError(f'{path}: invalid {key}.{name}')
-    if report['captureCallback']['samples'] == 0:
-        raise ValueError(f'{path}: collect capture samples before comparing')
+    windows = report.get('nativeWindows')
+    if not isinstance(windows, int) or isinstance(windows, bool) or windows < 0:
+        raise ValueError(f'{path}: invalid native window count')
+    for key in ['nativeCameraFps', 'nativeAnalysisFps', 'nativeInferenceFps']:
+        value = report.get(key)
+        if windows == 0:
+            if value is not None: raise ValueError(f'{path}: absent native measurements must be null')
+        elif isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
+            raise ValueError(f'{path}: invalid {key}')
+    if report['captureCallback']['samples'] == 0 and windows == 0:
+        raise ValueError(f'{path}: collect capture samples or native camera windows before comparing')
     return report
 
 
@@ -44,7 +53,7 @@ def compare(baseline, candidate, allow_configuration_change=False):
     lines = ['AresEdge measured timing comparison (candidate versus baseline)']
     if configuration_changed:
         lines.append('Different configurations: deliberate settings experiment, not a like-for-like regression check.')
-    for metric in ['captureCallback', 'flutterBuild', 'flutterRaster']:
+    for metric in ['captureCallback', 'flutterBuild', 'flutterRaster', 'nativeInferenceMs', 'nativeProcessingMs', 'nativePreprocessMs', 'nativeDecodeMs']:
         before, after = baseline[metric], candidate[metric]
         lines.append(f"{metric}: {before['samples']} -> {after['samples']} retained samples")
         for name in ['meanMs', 'p50Ms', 'p95Ms']:
@@ -54,8 +63,17 @@ def compare(baseline, candidate, allow_configuration_change=False):
                 continue
             change = f'{100 * (b - a) / a:+.1f}%' if a else 'percent unavailable (zero baseline)'
             lines.append(f'  {name}: {a:.2f} -> {b:.2f} ms ({b-a:+.2f} ms; {change})')
+    lines.append(f"Native windows: {baseline.get('nativeWindows')} -> {candidate.get('nativeWindows')}")
+    lines.append(f"Native timing samples omitted: {baseline.get('nativeTimingSamplesDropped', 0)} -> {candidate.get('nativeTimingSamplesDropped', 0)}")
     lines.append(f"Observed errors: {baseline.get('errors')} -> {candidate.get('errors')}")
-    lines.append('Native camera FPS and inference latency are not measured by this harness.')
+    for key in ['nativeCameraFps', 'nativeAnalysisFps', 'nativeInferenceFps']:
+        a, b = baseline.get(key), candidate.get(key)
+        if a is None or b is None:
+            lines.append(f'{key}: unavailable (no native window)')
+        else:
+            change = f'{100 * (b-a) / a:+.1f}%' if a else 'percent unavailable (zero baseline)'
+            lines.append(f'{key}: {a:.2f} -> {b:.2f} ({b-a:+.2f}; {change})')
+    lines.append('Positive timing deltas mean more time; positive FPS deltas mean higher throughput.')
     return '\n'.join(lines)
 
 

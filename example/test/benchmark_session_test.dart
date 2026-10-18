@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ares_edge/ares_edge.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ares_edge_example/workbench/benchmark_session.dart';
 
@@ -45,4 +46,43 @@ void main() {
     expect((report['captureBytes'] as List).first, 10);
     expect((report['captureBytes'] as List).last, 109);
   });
+  test(
+    'native FPS is duration-weighted and inference samples survive without Flutter frames',
+    () {
+      final session = BenchmarkSession(refreshRate: 60);
+      AresEdgePerformance sample(
+        int sequence,
+        int ms,
+        int frames,
+        List<double> inference,
+      ) => AresEdgePerformance.fromMap({
+        'sessionId': 'native-session',
+        'sequence': sequence,
+        'windowMs': ms.toDouble(),
+        'elapsedMs': 5000.0,
+        'cameraFrames': frames,
+        'analysisFrames': frames ~/ 2,
+        'inferenceRuns': inference.length,
+        'cameraFps': 1000 * frames / ms,
+        'analysisFps': 1000 * (frames ~/ 2) / ms,
+        'inferenceFps': 1000 * inference.length / ms,
+        'inferenceMs': inference,
+        'processingMs': <double>[],
+        'preprocessMs': <double>[],
+        'decodeMs': <double>[],
+        'timingSamplesDropped': 0,
+      });
+      final first = sample(1, 1000, 30, [10, 20]);
+      session.recordNative(first);
+      session.recordNative(first);
+      session.recordNative(sample(2, 2000, 30, [30]));
+      final report = session.report();
+      expect(report['nativeWindows'], 2);
+      expect(report['nativeCameraFps'], 20);
+      expect(report['nativeAnalysisFps'], 10);
+      expect((report['nativeInferenceMs'] as Map)['samples'], 3);
+      expect((report['nativeInferenceMs'] as Map)['p95Ms'], 30);
+      expect((report['flutterBuild'] as Map)['samples'], 0);
+    },
+  );
 }

@@ -37,7 +37,8 @@ void main() {
     await tester.pump();
     final report = jsonDecode(copied!) as Map;
     expect(report['nativeCameraFps'], isNull);
-    expect(report['nativeInferenceMs'], isNull);
+    expect((report['nativeInferenceMs'] as Map)['samples'], 0);
+    expect((report['nativeInferenceMs'] as Map)['p95Ms'], isNull);
     expect((report['captureCallback'] as Map)['samples'], 0);
     expect(copied, isNot(contains('never-export-this-test-key')));
     expect(report.keys, isNot(contains('licenceKey')));

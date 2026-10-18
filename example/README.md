@@ -46,7 +46,9 @@ Run on a physical device with `flutter run --profile` and your developer-configu
 ARES_EDGE_LICENCE define. Tap **Open performance workbench** to compare analysis
 quality and overlay settings, collect capture-callback and Flutter frame timings,
 then stop and copy a JSON report. The normal SDK trial/licence gates remain active.
-The harness does not expose native camera FPS or inference latency.
+The harness measures native camera/analysis FPS, ONNX inference timings,
+capture-callback latency and Flutter frame timings. Telemetry is opt-in via
+AresEdgeEmbedded.onPerformance and remains subject to the native licence gates.
 
 See the repository's performance-testing guide for the measurement definitions,
 test matrix and `tool/compare_benchmarks.py` report comparison tool.

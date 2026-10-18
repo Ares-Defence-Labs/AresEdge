@@ -136,7 +136,7 @@ class _WorkbenchState extends State<PerformanceWorkbench>
   }
 
   Map<String, Object?> _report() => {
-    'schemaVersion': 1,
+    'schemaVersion': 2,
     'createdAtUtc': DateTime.now().toUtc().toIso8601String(),
     'deviceLabel': _device.text.trim(),
     'os': Platform.operatingSystem,
@@ -197,6 +197,10 @@ class _WorkbenchState extends State<PerformanceWorkbench>
     final captures = report['captureCallback']! as Map<String, Object?>;
     final build = report['flutterBuild']! as Map<String, Object?>;
     final raster = report['flutterRaster']! as Map<String, Object?>;
+    final inference = report['nativeInferenceMs']! as Map<String, Object?>;
+    final processing = report['nativeProcessingMs']! as Map<String, Object?>;
+    final preprocess = report['nativePreprocessMs']! as Map<String, Object?>;
+    final decode = report['nativeDecodeMs']! as Map<String, Object?>;
     final generation = _generation;
     return Scaffold(
       appBar: AppBar(title: const Text('Performance workbench')),
@@ -205,7 +209,7 @@ class _WorkbenchState extends State<PerformanceWorkbench>
           padding: const EdgeInsets.all(16),
           children: [
             const Text(
-              'Measure on a real device in profile/release mode. Capture latency includes still capture, byte transport and callback delivery. Flutter timings do not measure native camera FPS or model inference.',
+              'Measure on a real device in profile/release mode. Native telemetry measures camera ingress FPS, analysis throughput and ONNX timings. Capture latency includes still capture, byte transport and callback delivery. Flutter frame timings are reported separately.',
             ),
             if (kDebugMode)
               const Padding(
@@ -279,6 +283,14 @@ class _WorkbenchState extends State<PerformanceWorkbench>
                 child: AresEdgeEmbedded(
                   key: ValueKey(generation),
                   controller: _camera,
+                  onPerformance: (value) {
+                    if (_running &&
+                        generation == _generation &&
+                        value.sessionElapsed - value.window >=
+                            const Duration(seconds: 2)) {
+                      _session.recordNative(value);
+                    }
+                  },
                   licenceKey: widget.licenceKey,
                   options: AresEdgeOptions(
                     quality: _quality,
@@ -344,6 +356,18 @@ class _WorkbenchState extends State<PerformanceWorkbench>
             Text(
               'Flutter frames over budget: ${_format(report['flutterFramesOverBudgetPercent'])}%',
             ),
+            Text(
+              'Native averages — camera: ${_format(report['nativeCameraFps'])} FPS · analysis: ${_format(report['nativeAnalysisFps'])} FPS · detector: ${_format(report['nativeInferenceFps'])} cycles/s',
+            ),
+            Text(
+              'ONNX samples: ${inference['samples']} · p50: ${_format(inference['p50Ms'])} ms · p95: ${_format(inference['p95Ms'])} ms',
+            ),
+            Text(
+              'Native windows: ${report['nativeWindows']} · timing samples dropped: ${report['nativeTimingSamplesDropped']}',
+            ),
+            Text(
+              'Native pipeline p95: ${_format(processing['p95Ms'])} ms · preprocess p95: ${_format(preprocess['p95Ms'])} ms · decode p95: ${_format(decode['p95Ms'])} ms',
+            ),
             Text('Errors: ${report['errors']}'),
             if (_error != null)
               Text(
@@ -352,7 +376,7 @@ class _WorkbenchState extends State<PerformanceWorkbench>
               ),
             const SizedBox(height: 12),
             const Text(
-              'Stop before changing configuration or copying results. Only measured samples are exported; native FPS/inference fields remain null. Images are discarded after counting their encoded byte size. Timings retain the last 10,000 Flutter frames and 100 captures.',
+              'Stop before changing configuration or copying results. No native value is shown until a measured window arrives. Tracking/classical frames do not create ONNX samples. Images are discarded after counting their encoded byte size. Retains 600 native windows, 10,000 Flutter frames and 100 captures.',
             ),
           ],
         ),

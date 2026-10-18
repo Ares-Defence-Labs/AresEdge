@@ -32,7 +32,7 @@ powered by AresEdge.
 Watch the [AresScan+ demo](https://www.youtube.com/watch?v=au0fnn8yGHE) and
 [official trailer](https://www.youtube.com/watch?v=QoQ2w-9bvho), or open the
 [interactive AresScan page](https://aresdefencelabs.com/ares-scan) for the videos
-and product walkthroughs. These are the videos configured on the official site.
+and product walkthroughs.
 
 <a href="https://www.youtube.com/watch?v=au0fnn8yGHE">
   <img src="media/scanner.webp" alt="AresScan+ document detection — click to watch the demo" width="280">
@@ -47,11 +47,8 @@ videos through links; the official AresScan page provides embedded playback.
 | --- | --- | --- |
 | <img src="media/scanner.webp" alt="AresScan document scanner detecting a page boundary" width="210"> | <img src="media/image-filters.webp" alt="AresScan image-filter controls" width="210"> | <img src="media/image-adjustments.webp" alt="AresScan image-adjustment workflow" width="210"> |
 
-These are genuine **AresScan+ app screenshots** from the official site. They show
-the host application's interface, including its additional app tools. The
-AresEdge SDK provides the documented camera, overlay and lightweight editor;
-AresEdgeScreen has its own minimal capture/gallery interface. The SDK's editor
-includes basic cropping, filters, adjustments, drawing and text.
+Document detection, filters and adjustments in **AresScan+**. Build your own
+scanner controls with AresEdgeEmbedded, or use the compact AresEdgeScreen.
 
 ## Run the performance workbench
 
@@ -69,9 +66,8 @@ flutter run --profile --dart-define=ARES_EDGE_LICENCE=YOUR_PORTAL_ISSUED_KEY
 
 Tap **Open performance workbench**, record your device/test conditions, and start
 a session. Capture the same document repeatedly, stop, and copy the report. The
-workbench reports measured p50/p95 capture-callback latency and Flutter build/raster
-timings. Native camera FPS and inference latency are not exposed by the current
-public API and remain null in exported results.
+workbench reports native camera and analysis FPS, ONNX inference p50/p95,
+capture-callback latency, and Flutter build/raster timings.
 
 See [performance testing](docs/performance-testing.md) for the repeatable test
 matrix, measurement definitions and report-comparison script, and

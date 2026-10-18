@@ -2,6 +2,9 @@
 
 ## 2.0.0 — unreleased
 
+- Add opt-in native camera/analysis FPS and ONNX timing windows via onPerformance.
+- Extend the workbench and JSON comparisons with native measurements.
+
 - Introduce AresEdgeEmbedded and AresEdgeScreen through ares_edge.dart.
 - Add AresEdgeController capture, explicit torch and toggle controls.
 - Add typed options, quality/shape enums and immutable image callback results.

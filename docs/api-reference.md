@@ -54,7 +54,7 @@ state is exposed. Persist bytes in your own storage if needed after navigation.
 `const AresEdgeEmbedded({Key? key, required AresEdgeController controller,
 required FutureOr<void> Function(AresEdgeImage image) onCapture, String? licenceKey,
 AresEdgeOptions options = const AresEdgeOptions(), ValueChanged<String>? onError,
-VoidCallback? onLicenceRequired})`
+VoidCallback? onLicenceRequired, ValueChanged<AresEdgePerformance>? onPerformance})`
 
 | Member | Contract |
 | --- | --- |
@@ -64,6 +64,7 @@ VoidCallback? onLicenceRequired})`
 | onCapture | Original image. Async callbacks are serialised; duplicate callbacks while processing are ignored. |
 | onError | Native/status errors and capture callback failures; host decides presentation. |
 | onLicenceRequired | Camera access expired; preview already stopped/replaced. |
+| onPerformance | Optional native measurement windows; null disables collection/transport. |
 
 Contains camera/overlay, required trial notice and expired-trial message. No normal
 toolbar/editor/navigation. Requires bounded constraints. Lifecycle-managed.
@@ -72,7 +73,8 @@ toolbar/editor/navigation. Requires bounded constraints. Lifecycle-managed.
 
 `const AresEdgeScreen({Key? key, String? licenceKey, AresEdgeOptions options =
 const AresEdgeOptions(), bool editAfterCapture = true,
-ValueChanged<Uint8List?>? onComplete, ValueChanged<String>? onError})`
+ValueChanged<Uint8List?>? onComplete, ValueChanged<String>? onError,
+ValueChanged<AresEdgePerformance>? onPerformance})`
 
 | Member | Contract |
 | --- | --- |
@@ -81,14 +83,42 @@ ValueChanged<Uint8List?>? onComplete, ValueChanged<String>? onError})`
 | editAfterCapture | true: editor; false: original camera/gallery image, no edits. |
 | onComplete | Optional callback, called once. Without it the route pops. Null indicates cancel/expiry. |
 | onError | Reports failures, also shown on screen. |
+| onPerformance | Native telemetry while the scanner camera is active; null disables it. |
 
 `static Future<Uint8List?> open(BuildContext context, {String? licenceKey,
-AresEdgeOptions options = const AresEdgeOptions(), bool editAfterCapture = true})`
+AresEdgeOptions options = const AresEdgeOptions(), bool editAfterCapture = true,
+ValueChanged<AresEdgePerformance>? onPerformance})`
 opens a fullscreen-dialog Flutter route. Await returned compressed bytes or null.
 Check context.mounted before subsequent navigation. Back dismisses the screen;
 editor/picker cancellation returns to scanning. Available controls: back, torch,
 capture and gallery. Unsupported platforms throw UnsupportedError from native view
 creation; permission failures are reported via onError/preview error state.
+
+## AresEdgePerformance
+
+Immutable native window supplied to `onPerformance`. `AresEdgePerformance.fromMap`
+parses a previously recorded native map and throws FormatException on malformed
+or non-finite values. Parsing metrics never authorises SDK access.
+
+| Member | Meaning |
+| --- | --- |
+| sessionId | Per-camera/telemetry session identifier; changes on restart. |
+| sequence | Increasing window number within that session. |
+| window | Actual monotonic Duration covered by the window. |
+| sessionElapsed | Native monotonic Duration since session start, for warm-up filtering. |
+| cameraFrames / cameraFps | SDK camera-ingress frame count and rate. |
+| analysisFrames / analysisFps | Native analysis/tracking frame count and rate. |
+| inferenceRuns / inferenceFps | Completed ONNX detector cycles and rate, before geometry filtering. |
+| inferenceMs | Unmodifiable ONNX execution-time samples in milliseconds. |
+| processingMs | Native detector pipeline elapsed samples; platform scope is described in the benchmarking guide. |
+| preprocessMs | Native input-preparation samples. |
+| decodeMs | Native output-decoding samples. |
+| timingSamplesDropped | Samples omitted after the 256-record per-window transport limit. |
+
+No callback means telemetry collection is disabled. The native licence and trial
+checks apply as usual. Empty inference samples mean no ONNX measurement occurred,
+including classical/tracking-only paths. FPS is not inferred from overlay events,
+Flutter redraws or reciprocal inference latency. See [benchmarking](performance-testing.md).
 
 ## Compatibility
 

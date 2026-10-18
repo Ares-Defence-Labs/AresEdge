@@ -18,7 +18,9 @@ flutter run --profile --dart-define=ARES_EDGE_LICENCE=YOUR_PORTAL_ISSUED_KEY
 
 Open **Performance workbench**. Enter a device/condition label, choose quality,
 overlay policy and comparison refresh budget, then start. The first two seconds
-are excluded from Flutter frame statistics. Wait for the preview to settle before
+are excluded from Flutter frame statistics; native windows wholly within the
+first two seconds of each native session are also excluded, including windows
+that cross the warm-up boundary. Wait for the preview to settle before
 pressing Measure capture. Collect at least 20 manual captures of the same document,
 stop the session, and copy the JSON. Start a fresh session for another setting.
 Stop unmounts the camera; backgrounding also ends the measurement session.
@@ -32,10 +34,45 @@ Stop unmounts the camera; backgrounding also ends the measurement session.
 | Flutter build/raster p50/p95/mean | FrameTiming samples supplied by Flutter after warm-up. Includes the host UI and instrumentation overhead. |
 | Flutter frames over budget | Retained frames where build or raster exceeds 1000 / selected target refresh Hz. This is an observation, not an OS dropped-frame count. |
 | Errors | Observed camera/command errors and 15-second capture timeouts. |
-| Native camera FPS / inference ms | Null: the current public API does not expose these measurements. |
+| Native camera FPS | CameraX/AVCapture frame callbacks delivered to the SDK per native monotonic second, before latest-frame analysis selection. This measures SDK camera ingress, not display refresh or an estimated sensor rate. |
+| Native analysis FPS | Frames entering native analysis/tracking per second. |
+| Native inference cycles/s | Completed detector cycles containing an ONNX run per second, independent of tracking/overlay updates. |
+| ONNX inference p50/p95/mean | Actual ONNX execution time per completed detector cycle, including combined full-frame/ROI calls where applicable. |
+| Native pipeline/preprocess/decode | Detector elapsed, input-preparation and output-decoding timings. Decode excludes subsequent tracking/geometry updates. |
+
+Telemetry is enabled by supplying `onPerformance` to AresEdgeEmbedded or
+AresEdgeScreen (including `AresEdgeScreen.open`). Omit it to disable collection.
+Native windows arrive about once a second; native FPS is computed from the actual
+window duration, so a delayed UI callback is not mistaken for a slow camera.
+Camera/telemetry restart creates a fresh session; stale inference completions from
+a previous session are excluded. Transport retains at most 256 timing records per
+window and reports any omitted timing records while continuing to count frames/runs.
+
+```dart
+AresEdgeEmbedded(
+  controller: camera,
+  licenceKey: configuredKey,
+  onCapture: (image) { /* Save image.bytes. */ },
+  onPerformance: (metrics) {
+    // Native measurements; independent of Flutter FrameTiming.
+    print('Camera: ${metrics.cameraFps} FPS');
+    print('Analysis: ${metrics.analysisFps} FPS');
+    print('ONNX execution samples: ${metrics.inferenceMs} ms');
+  },
+);
+```
+
+Android pipeline elapsed time includes preparation and worker-dispatch wait.
+iOS pipeline elapsed time covers the detector function's preparation, execution
+and decoding. `inferenceMs` contains ONNX execution time on both platforms; a
+cycle may include more than one ONNX call when full-frame/ROI passes are combined.
+Compare the same platform, configuration and scene when tracking regressions.
 
 Statistics use nearest-rank percentiles. Empty measurements are null rather than
-zero. Retains the latest 10,000 Flutter frames and 100 captures. The one-second
+zero. Retains the latest 600 native windows, 10,000 Flutter frames and 100 captures.
+Aggregate native FPS divides retained frame counts by their summed native window
+durations. No native window yields null FPS; an observed idle window yields zero
+FPS. Tracking-only/classical detection yields no ONNX timing sample. The one-second
 metrics refresh and this workbench's layout contribute to measured Flutter work.
 A static native camera preview can produce few Flutter frames even while its
 camera stream is smooth: Flutter sample counts are not camera frame rates.
@@ -63,8 +100,8 @@ This harness never uploads reports. Copy report JSON after stopping so it is sta
 Keep OS, display refresh rate, power mode, battery/thermal conditions, lighting,
 document framing and app build mode consistent. Label each run. Cool the device
 between heavy runs; compare several repetitions rather than a single score.
-The comparison script requires matching labelled environment/configuration and
-nonempty capture samples. For intentional quality/overlay experiments, pass
+Reports use schema version 2. The comparison script requires matching labelled
+environment/configuration and at least one capture sample or native window. For intentional quality/overlay experiments, pass
 `--allow-configuration-change`; device, OS and build conditions must still match. Save copied reports as baseline.json and candidate.json. From the repository root:
 
 ```sh
