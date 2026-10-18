@@ -29,17 +29,14 @@ powered by AresEdge.
 
 ## Watch scanning in action
 
-Watch the [AresScan+ demo](https://www.youtube.com/watch?v=au0fnn8yGHE) and
-[official trailer](https://www.youtube.com/watch?v=QoQ2w-9bvho), or open the
-[interactive AresScan page](https://aresdefencelabs.com/ares-scan) for the videos
-and product walkthroughs.
+Live document tracking and the automatic capture countdown in AresScan+.
 
-<a href="https://www.youtube.com/watch?v=au0fnn8yGHE">
-  <img src="media/scanner.webp" alt="AresScan+ document detection — click to watch the demo" width="280">
-</a>
+[![AresEdge live document tracking and capture countdown](https://raw.githubusercontent.com/Ares-Defence-Labs/AresEdge/main/media/scanning-demo.gif)](https://github.com/Ares-Defence-Labs/AresEdge/raw/refs/heads/main/media/scanning-demo.mp4)
 
-**Click the scanning screenshot above to watch the demo.** GitHub READMEs open
-videos through links; the official AresScan page provides embedded playback.
+[Watch the MP4](https://github.com/Ares-Defence-Labs/AresEdge/raw/refs/heads/main/media/scanning-demo.mp4) ·
+[Full demo](https://www.youtube.com/watch?v=au0fnn8yGHE) ·
+[Official trailer](https://www.youtube.com/watch?v=QoQ2w-9bvho) ·
+[Explore AresScan+](https://aresdefencelabs.com/ares-scan)
 
 ### Scanning and editing screenshots
 

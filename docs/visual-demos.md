@@ -6,12 +6,13 @@
 - [Official AresScan+ trailer](https://www.youtube.com/watch?v=QoQ2w-9bvho).
 - [Official AresScan walkthrough page](https://aresdefencelabs.com/ares-scan).
 
-Watch document scanning and editing in AresScan+. Click a video link to watch on
-YouTube, or use the embedded players on the AresScan page.
+Watch live document tracking below, or open the full videos above.
 
 ## Document boundary detection
 
-[![Document detection in AresScan](../media/scanner.webp)](https://www.youtube.com/watch?v=au0fnn8yGHE)
+[![AresEdge live document tracking and capture countdown](https://raw.githubusercontent.com/Ares-Defence-Labs/AresEdge/main/media/scanning-demo.gif)](https://github.com/Ares-Defence-Labs/AresEdge/raw/refs/heads/main/media/scanning-demo.mp4)
+
+[Watch the MP4](https://github.com/Ares-Defence-Labs/AresEdge/raw/refs/heads/main/media/scanning-demo.mp4)
 
 The document outline and capture countdown are visible in the AresScan scanner.
 This is the host app's complete scanning screen. For your own toolbar, use
