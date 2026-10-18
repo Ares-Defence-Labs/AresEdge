@@ -13,6 +13,24 @@ open **AresEdgeScreen** for a minimal back/torch/capture/gallery interface. The
 optional lightweight editor provides perspective cropping, filters, adjustments,
 drawing and text. No AI editor features are included.
 
+## Try AresEdge in AresScan+
+
+Experience document scanning in **AresScan+**, the official Ares Defence Labs app
+powered by AresEdge.
+
+<p>
+  <a href="https://play.google.com/store/apps/details?id=ai.aresdefencelabs.aresscan">
+    <img src="branding/google-play.webp" alt="Get AresScan+ on Google Play" height="48">
+  </a>
+  &nbsp;
+  <a href="https://apps.apple.com/us/app/aresscan/id6759765449">
+    <img src="branding/app-store.webp" alt="Download AresScan+ on the App Store" height="48">
+  </a>
+</p>
+
+[Discover AresScan+](https://aresdefencelabs.com/ares-scan) ·
+[Explore more Ares Defence Labs SDKs](https://aresdefencelabs.com/development-sdks)
+
 **Release status:** the `ares_edge` customer package is being prepared and is not
 published to pub.dev. This repository contains documentation and a runnable host
 example, not the proprietary implementation or a downloadable SDK binary. Obtain
