@@ -65,7 +65,7 @@ document framing and app build mode consistent. Label each run. Cool the device
 between heavy runs; compare several repetitions rather than a single score.
 The comparison script requires matching labelled environment/configuration and
 nonempty capture samples. For intentional quality/overlay experiments, pass
-`--allow-configuration-change`; device, OS and build conditions must still match. Save copied reports as baseline.json and candidate.json:
+`--allow-configuration-change`; device, OS and build conditions must still match. Save copied reports as baseline.json and candidate.json. From the repository root:
 
 ```sh
 python3 example/tool/compare_benchmarks.py baseline.json candidate.json
