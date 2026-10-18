@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:ares_edge/ares_edge.dart';
 import 'package:flutter/material.dart';
+import 'workbench/performance_workbench.dart';
 
 // Set this in developer source/build configuration, never through an end-user UI.
 // No licence key is committed; omitting the define tests the process trial.
@@ -71,6 +72,15 @@ class _ExampleHomeState extends State<ExampleHome> {
         OutlinedButton(
           onPressed: () => _scan(embedded: true),
           child: const Text('Open custom AresEdgeEmbedded'),
+        ),
+        OutlinedButton.icon(
+          onPressed: () => Navigator.of(context).push<void>(
+            MaterialPageRoute(
+              builder: (_) => const PerformanceWorkbench(licenceKey: _licence),
+            ),
+          ),
+          icon: const Icon(Icons.speed),
+          label: const Text('Open performance workbench'),
         ),
         if (_error != null) Text(_error!),
         if (_image case final image?) ...[

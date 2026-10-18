@@ -27,6 +27,56 @@ powered by AresEdge.
 [Discover AresScan+](https://aresdefencelabs.com/ares-scan) ·
 [Explore more Ares Defence Labs SDKs](https://aresdefencelabs.com/development-sdks)
 
+## Watch scanning in action
+
+Watch the [AresScan+ demo](https://www.youtube.com/watch?v=au0fnn8yGHE) and
+[official trailer](https://www.youtube.com/watch?v=QoQ2w-9bvho), or open the
+[interactive AresScan page](https://aresdefencelabs.com/ares-scan) for the videos
+and product walkthroughs. These are the videos configured on the official site.
+
+<a href="https://www.youtube.com/watch?v=au0fnn8yGHE">
+  <img src="media/scanner.webp" alt="AresScan+ document detection — click to watch the demo" width="280">
+</a>
+
+**Click the scanning screenshot above to watch the demo.** GitHub READMEs open
+videos through links; the official AresScan page provides embedded playback.
+
+### Scanning and editing screenshots
+
+| Document detection | Filters | Image adjustments |
+| --- | --- | --- |
+| <img src="media/scanner.webp" alt="AresScan document scanner detecting a page boundary" width="210"> | <img src="media/image-filters.webp" alt="AresScan image-filter controls" width="210"> | <img src="media/image-adjustments.webp" alt="AresScan image-adjustment workflow" width="210"> |
+
+These are genuine **AresScan+ app screenshots** from the official site. They show
+the host application's interface, including its additional app tools. The
+AresEdge SDK provides the documented camera, overlay and lightweight editor;
+AresEdgeScreen has its own minimal capture/gallery interface. The SDK's editor
+includes basic cropping, filters, adjustments, drawing and text.
+
+## Run the performance workbench
+
+The [example project](example/README.md) includes a **Performance workbench** for
+real Android/iOS devices. Select analysis quality and overlay policy, collect
+capture latency and Flutter frame timings, then copy a JSON report for comparisons.
+The normal offline licence checks and 60-second trial still apply.
+
+```sh
+# After configuring the local SDK path in example/pubspec_overrides.yaml:
+cd example
+flutter pub get
+flutter run --profile --dart-define=ARES_EDGE_LICENCE=YOUR_PORTAL_ISSUED_KEY
+```
+
+Tap **Open performance workbench**, record your device/test conditions, and start
+a session. Capture the same document repeatedly, stop, and copy the report. The
+workbench reports measured p50/p95 capture-callback latency and Flutter build/raster
+timings. Native camera FPS and inference latency are not exposed by the current
+public API and remain null in exported results.
+
+See [performance testing](docs/performance-testing.md) for the repeatable test
+matrix, measurement definitions and report-comparison script, and
+[visual demos](docs/visual-demos.md) for media sources and feature scope.
+
 **Release status:** the `ares_edge` customer package is being prepared and is not
 published to pub.dev. This repository contains documentation and a runnable host
 example, not the proprietary implementation or a downloadable SDK binary. Obtain
@@ -38,6 +88,8 @@ a local customer package from Ares Defence Labs before running the example.
 - [Complete public API reference](docs/api-reference.md)
 - [Offline licensing, trial and renewal](docs/licensing.md)
 - [Platform setup and troubleshooting](docs/platforms.md)
+- [Video demos and screenshots](docs/visual-demos.md)
+- [Performance workbench](docs/performance-testing.md)
 - [Example application](example/README.md)
 - [Purchase a licence](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview)
 - [Report a bug or ask a question](https://github.com/Ares-Defence-Labs/AresEdge/issues)

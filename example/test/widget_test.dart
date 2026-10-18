@@ -9,6 +9,7 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: ExampleHome()));
     expect(find.text('Open AresEdgeScreen'), findsOneWidget);
     expect(find.text('Open custom AresEdgeEmbedded'), findsOneWidget);
+    expect(find.text('Open performance workbench'), findsOneWidget);
     expect(find.byType(SwitchListTile), findsOneWidget);
     await tester.tap(find.byType(Switch));
     await tester.pump();

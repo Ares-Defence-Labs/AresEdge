@@ -39,3 +39,14 @@ buttons. Cancellation shows no image; returned images appear on the home page.
 
 See the repository docs for error handling, licences and platform setup. The
 example can be adapted for licensed integration under the commercial LICENSE.
+
+## Performance workbench
+
+Run on a physical device with `flutter run --profile` and your developer-configured
+ARES_EDGE_LICENCE define. Tap **Open performance workbench** to compare analysis
+quality and overlay settings, collect capture-callback and Flutter frame timings,
+then stop and copy a JSON report. The normal SDK trial/licence gates remain active.
+The harness does not expose native camera FPS or inference latency.
+
+See the repository's performance-testing guide for the measurement definitions,
+test matrix and `tool/compare_benchmarks.py` report comparison tool.
