@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.1 — 2026-10-19
+
+- Keep automated upload receipts consistent with the files included in registry downloads, without changing guarded review inputs.
+
+- Improve discovery with document-scanner, edge-detection, scanner, camera and image-processing topics and an accurate searchable description.
+- Use absolute branding, scanning media and documentation links that render on pub.dev and GitHub.
+- Support the current-release README marker when assembling future customer packages.
+
 ## 2.0.0 — 2026-10-18
 
 - Introduce the commercial AresEdge document-scanning SDK for Android and iOS.

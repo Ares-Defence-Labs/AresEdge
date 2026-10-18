@@ -1,4 +1,4 @@
-[![Ares Defence Labs](./branding/ares-defence-labs-banner.png)](https://aresdefencelabs.com)
+[![Ares Defence Labs](https://raw.githubusercontent.com/Ares-Defence-Labs/AresEdge/main/branding/ares-defence-labs-banner.png)](https://aresdefencelabs.com)
 
 # AresEdge
 
@@ -13,9 +13,10 @@
 > ship the renewed key in every app before the current key expires; otherwise,
 > customers running an expired key see the trial popup and session lock.
 >
-> [Purchase a licence](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview) · [Read the commercial licence](LICENSE)
+> [Purchase a licence](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview) · [Read the commercial licence](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/LICENSE)
 
-Commercial document scanning for Flutter by Ares Defence Labs.
+Commercial Flutter document scanner with real-time edge detection, automatic
+capture and perspective-corrected image cropping for Android and iOS.
 
 Embed a native camera and configurable edge overlay with **AresEdgeEmbedded**, or
 open **AresEdgeScreen** for a minimal back/torch/capture/gallery interface. The
@@ -67,11 +68,11 @@ powered by AresEdge.
 
 <p>
   <a href="https://play.google.com/store/apps/details?id=ai.aresdefencelabs.aresscan">
-    <img src="branding/google-play.webp" alt="Get AresScan+ on Google Play" height="48">
+    <img src="https://raw.githubusercontent.com/Ares-Defence-Labs/AresEdge/main/branding/google-play.webp" alt="Get AresScan+ on Google Play" height="48">
   </a>
   &nbsp;
   <a href="https://apps.apple.com/us/app/aresscan/id6759765449">
-    <img src="branding/app-store.webp" alt="Download AresScan+ on the App Store" height="48">
+    <img src="https://raw.githubusercontent.com/Ares-Defence-Labs/AresEdge/main/branding/app-store.webp" alt="Download AresScan+ on the App Store" height="48">
   </a>
 </p>
 
@@ -91,20 +92,20 @@ Live document tracking and the automatic capture countdown in AresScan+.
 
 ### Document scanning
 
-<img src="media/scanner.webp" alt="Document scanning with AresEdge in AresScan+" width="280">
+<img src="https://raw.githubusercontent.com/Ares-Defence-Labs/AresEdge/main/media/scanner.webp" alt="Document scanning with AresEdge in AresScan+" width="280">
 
 Document detection in **AresScan+**. Build your own scanner controls with
 AresEdgeEmbedded, or use the compact AresEdgeScreen.
 
 ## Run the performance workbench
 
-The SDK [example project](docs/example-project.md) includes a **Performance workbench** for
+The SDK [example project](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/example-project.md) includes a **Performance workbench** for
 real Android/iOS devices. Select analysis quality and overlay policy, collect
 capture latency and Flutter frame timings, then copy a JSON report for comparisons.
 The normal offline licence checks and 60-second trial still apply.
 
 ```sh
-# After configuring the local SDK path in example/pubspec_overrides.yaml:
+# From the downloaded package example directory:
 cd example
 flutter pub get
 flutter run --profile --dart-define=ARES_EDGE_LICENCE=YOUR_PORTAL_ISSUED_KEY
@@ -115,21 +116,21 @@ a session. Capture the same document repeatedly, stop, and copy the report. The
 workbench reports native camera and analysis FPS, ONNX inference p50/p95,
 capture-callback latency, and Flutter build/raster timings.
 
-See [performance testing](docs/performance-testing.md) for the repeatable test
+See [performance testing](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/performance-testing.md) for the repeatable test
 matrix, measurement definitions and report-comparison script, and
-[visual demos](docs/visual-demos.md) for media sources and feature scope.
+[visual demos](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/visual-demos.md) for media sources and feature scope.
 
-**Current release:** [ares_edge 2.0.0](https://pub.dev/packages/ares_edge/versions/2.0.0).
+**Current release:** [ares_edge 2.0.1](https://pub.dev/packages/ares_edge/versions/2.0.1).
 
-- [Installation and quick start](docs/getting-started.md)
-- [Embedded camera and custom controls](docs/embedded-camera.md)
-- [Ready-made scanner](docs/scanner-screen.md)
-- [Complete public API reference](docs/api-reference.md)
-- [Offline licensing, trial and renewal](docs/licensing.md)
-- [Platform setup and troubleshooting](docs/platforms.md)
-- [Video demos and screenshots](docs/visual-demos.md)
-- [Performance workbench](docs/performance-testing.md)
-- [Example application](docs/example-project.md)
+- [Installation and quick start](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/getting-started.md)
+- [Embedded camera and custom controls](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/embedded-camera.md)
+- [Ready-made scanner](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/scanner-screen.md)
+- [Complete public API reference](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/api-reference.md)
+- [Offline licensing, trial and renewal](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/licensing.md)
+- [Platform setup and troubleshooting](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/platforms.md)
+- [Video demos and screenshots](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/visual-demos.md)
+- [Performance workbench](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/performance-testing.md)
+- [Example application](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/example-project.md)
 - [Purchase a licence](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview)
 - [Report a bug or ask a question](https://github.com/Ares-Defence-Labs/AresEdge/issues)
 
@@ -154,7 +155,7 @@ Do not commit a real key to this public example/repository.
 
 **Sandbox keys require a sandbox-trusted test build.** The production package
 rejects sandbox keys; use a production-portal key for production apps. See
-[offline licensing and renewal](docs/licensing.md) for environments, expiry and
+[offline licensing and renewal](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/licensing.md) for environments, expiry and
 how to distribute replacement keys before customers encounter the trial lock.
 
 ## Ready-made scanner: AresEdgeScreen
@@ -269,7 +270,7 @@ required. Only one SDK camera can be active at a time.
 
 A commercial licence is required for production use. Downloading the example,
 viewing source wrappers, or obtaining binaries does not grant a free production
-licence. See [LICENSE](LICENSE). Third-party components retain their own terms.
+licence. See [LICENSE](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/LICENSE). Third-party components retain their own terms.
 
 ## Document extraction
 
