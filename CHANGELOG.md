@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.2 — 2026-10-19
+
+- Resolve all ten public-wrapper flow-control lints and verify Dart formatting.
+- Enforce flow-control lint checks during customer API validation.
+- Keep the documentation-only GitHub project in README and issue links rather than declaring it as the package source repository.
+
 ## 2.0.1 — 2026-10-19
 
 - Keep automated upload receipts consistent with the files included in registry downloads, without changing guarded review inputs.

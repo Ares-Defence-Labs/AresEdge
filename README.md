@@ -120,7 +120,7 @@ See [performance testing](https://github.com/Ares-Defence-Labs/AresEdge/blob/mai
 matrix, measurement definitions and report-comparison script, and
 [visual demos](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/visual-demos.md) for media sources and feature scope.
 
-**Current release:** [ares_edge 2.0.1](https://pub.dev/packages/ares_edge/versions/2.0.1).
+**Current release:** [ares_edge 2.0.2](https://pub.dev/packages/ares_edge/versions/2.0.2).
 
 - [Installation and quick start](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/getting-started.md)
 - [Embedded camera and custom controls](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/embedded-camera.md)
