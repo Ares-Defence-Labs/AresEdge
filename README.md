@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://aresdefencelabs.com">
+    <img src="branding/ares-defence-labs.png" alt="Ares Defence Labs" width="404">
+  </a>
+</p>
+
 # AresEdge
 
 Commercial document scanning for Flutter by Ares Defence Labs.
@@ -22,17 +28,127 @@ a local customer package from Ares Defence Labs before running the example.
 - [Purchase a licence](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview)
 - [Report a bug or ask a question](https://github.com/Ares-Defence-Labs/AresEdge/issues)
 
+## Configure your licence
+
+Copy your signed customer key from the portal and supply it in developer source
+or private build configuration. End users never enter a key in the app.
+
+```dart
+const licenceKey = String.fromEnvironment('ARES_EDGE_LICENCE');
+// Alternatively: const licenceKey = 'YOUR_PORTAL_ISSUED_LICENCE_KEY';
+```
+
+```sh
+flutter run --dart-define=ARES_EDGE_LICENCE=YOUR_PORTAL_ISSUED_LICENCE_KEY
+```
+
+Keys verify offline. Missing, invalid or expired keys use the shared 60-second
+process trial. Do not commit a real key to this public example/repository.
+
+## Ready-made scanner: AresEdgeScreen
+
 ```dart
 import 'package:ares_edge/ares_edge.dart';
+import 'package:flutter/material.dart';
 
-final bytes = await AresEdgeScreen.open(
-  context,
-  licenceKey: const String.fromEnvironment('ARES_EDGE_LICENCE'),
-  editAfterCapture: false, // Return the original photo without crop/edit screens.
-);
-if (bytes == null) return; // Cancelled or trial expired.
-// Save bytes to storage owned by your app.
+Future<void> scanDocument(BuildContext context) async {
+  final bytes = await AresEdgeScreen.open(
+    context,
+    licenceKey: licenceKey,
+    options: const AresEdgeOptions(
+      overlayColor: Colors.teal,
+      flashEnabled: false, // Initial torch state; the screen has a torch button.
+    ),
+    editAfterCapture: false, // Skip ALL cropping/editing; return original bytes.
+  );
+  if (bytes == null) return; // Cancelled or trial expired.
+  // Save bytes to storage owned by your app, or display Image.memory(bytes).
+}
 ```
+
+Use `editAfterCapture: true` to open the lightweight editor instead. The screen
+includes back, flashlight, capture and gallery controls. You can also push
+`AresEdgeScreen(licenceKey: licenceKey, editAfterCapture: false)` in your own route.
+
+## Custom camera: AresEdgeEmbedded
+
+Retain a controller in State, add your own controls, and handle the captured bytes:
+
+```dart
+class CustomScanner extends StatefulWidget {
+  const CustomScanner({super.key});
+  @override
+  State<CustomScanner> createState() => _CustomScannerState();
+}
+
+class _CustomScannerState extends State<CustomScanner> {
+  final camera = AresEdgeController();
+
+  Future<void> runCommand(Future<void> Function() action) async {
+    try {
+      await action();
+      if (mounted) setState(() {});
+    } on Object catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.toString())),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    camera.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    body: Column(children: [
+      Expanded(child: AresEdgeEmbedded(
+        licenceKey: licenceKey,
+        controller: camera,
+        options: const AresEdgeOptions(
+          forceEdgeOverlay: false, // Keep automatic device policy.
+          overlayColor: Colors.orange,
+        ),
+        onCapture: (image) {
+          // Embedded mode never opens an editor automatically.
+          // Save image.bytes, or return them to your calling route:
+          if (mounted) Navigator.of(context).pop(image.bytes);
+        },
+        onError: (message) {
+          // Display or log your application's camera error message.
+        },
+        onLicenceRequired: () {
+          // The SDK has already stopped/replaced the expired preview.
+        },
+      )),
+      SafeArea(child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          IconButton(
+            tooltip: 'Toggle flashlight',
+            icon: Icon(camera.flashEnabled ? Icons.flash_on : Icons.flash_off),
+            onPressed: () => runCommand(camera.toggleFlash),
+          ),
+          FilledButton(
+            onPressed: () => runCommand(camera.capture),
+            child: const Text('Capture'),
+          ),
+        ],
+      )),
+    ]),
+  );
+}
+```
+
+The embedded snippet uses the same imports and `licenceKey` constant shown above.
+For explicit torch control, use `await camera.setFlashEnabled(true)` or
+`await camera.setFlashEnabled(false)`. Torch support depends on the device.
+Await each command and handle startup/permission errors. The embedded component
+supplies the camera/overlay; your app owns navigation, controls and image handling.
+
 
 Android API 24+, iOS 16+, Flutter 3.44+, Dart 3.12+. Customers receive compiled
 native cores and the bundled default ONNX model. Store-asset delivery is not
