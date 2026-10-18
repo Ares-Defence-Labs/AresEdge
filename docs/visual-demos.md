@@ -18,14 +18,8 @@ The document outline and capture countdown are visible in the AresScan scanner.
 This is the host app's complete scanning screen. For your own toolbar, use
 AresEdgeEmbedded. For the SDK's minimal toolbar, use AresEdgeScreen.
 
-## Filters and adjustments
-
-| Filter controls in the app | Adjustment workflow in the app |
-| --- | --- |
-| <img src="../media/image-filters.webp" alt="AresScan filter controls" width="250"> | <img src="../media/image-adjustments.webp" alt="AresScan adjustment workflow" width="250"> |
-
-Scanning, filtering and adjustments in AresScan+. For the SDK controls and editing
-workflow, see the [example project](../example/README.md).
+The first AresEdge release provides scanning and original image output. AresScan+
+has additional editing tools which are separate from this SDK release.
 
 ## Try and measure
 

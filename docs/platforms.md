@@ -50,7 +50,6 @@ owner delivery scripts or private credentials into a customer integration.
 | Trial with a configured key | Check full key, app/package/bundle ID, signing identity, product, platform and validity dates. Never post the key publicly. |
 | Trial immediately expired after reopening | The allowance is per process, not per widget/route. |
 | Torch unchanged | Hardware may lack a torch; flashEnabled records a request, not physical confirmation. |
-| Editor unwanted | Set editAfterCapture: false. |
 | Native link/build error | Check the artifact's platform requirements, resolve pods, inspect dependency conflicts, and fully rebuild. |
 
 When reporting a bug include SDK/Flutter versions, OS/device, presentation mode,

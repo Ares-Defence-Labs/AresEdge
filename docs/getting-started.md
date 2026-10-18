@@ -37,16 +37,15 @@ Future<void> scan(BuildContext context) async {
       overlayColor: Colors.teal,
       forceEdgeOverlay: false,
     ),
-    editAfterCapture: true,
   );
   if (!context.mounted || image == null) return;
   // Store the returned compressed bytes, or show Image.memory(image).
 }
 ```
 
-`editAfterCapture: false` returns the original camera/gallery bytes. The default
-true opens the lightweight editor and returns its output. Cancellation or trial
-expiry returns null. The result has no SDK-managed persistent file.
+Capture or gallery selection returns the original image bytes directly, without
+an editor or image processing. Cancellation or trial expiry returns null. The
+result has no SDK-managed persistent file.
 
 ## Licence at build time
 

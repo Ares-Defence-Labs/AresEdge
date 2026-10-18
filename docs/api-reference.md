@@ -72,7 +72,7 @@ toolbar/editor/navigation. Requires bounded constraints. Lifecycle-managed.
 ## AresEdgeScreen extends StatefulWidget
 
 `const AresEdgeScreen({Key? key, String? licenceKey, AresEdgeOptions options =
-const AresEdgeOptions(), bool editAfterCapture = true,
+const AresEdgeOptions(),
 ValueChanged<Uint8List?>? onComplete, ValueChanged<String>? onError,
 ValueChanged<AresEdgePerformance>? onPerformance})`
 
@@ -80,17 +80,16 @@ ValueChanged<AresEdgePerformance>? onPerformance})`
 | --- | --- |
 | licenceKey | Same signed offline key as embedded. |
 | options | Same immutable camera configuration. |
-| editAfterCapture | true: editor; false: original camera/gallery image, no edits. |
 | onComplete | Optional callback, called once. Without it the route pops. Null indicates cancel/expiry. |
 | onError | Reports failures, also shown on screen. |
 | onPerformance | Native telemetry while the scanner camera is active; null disables it. |
 
 `static Future<Uint8List?> open(BuildContext context, {String? licenceKey,
-AresEdgeOptions options = const AresEdgeOptions(), bool editAfterCapture = true,
+AresEdgeOptions options = const AresEdgeOptions(),
 ValueChanged<AresEdgePerformance>? onPerformance})`
-opens a fullscreen-dialog Flutter route. Await returned compressed bytes or null.
+opens a fullscreen-dialog Flutter route. Await original compressed image bytes or null.
 Check context.mounted before subsequent navigation. Back dismisses the screen;
-editor/picker cancellation returns to scanning. Available controls: back, torch,
+picker cancellation returns to scanning. Available controls: back, torch,
 capture and gallery. Unsupported platforms throw UnsupportedError from native view
 creation; permission failures are reported via onError/preview error state.
 

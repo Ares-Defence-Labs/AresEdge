@@ -1,6 +1,6 @@
 # AresEdge example
 
-A complete Android/iOS Flutter host showing AresEdgeScreen, editor on/off, and
+A complete Android/iOS Flutter host showing AresEdgeScreen and
 AresEdgeEmbedded under custom capture/torch controls. No real licence is included.
 
 ## Local SDK setup (before pub.dev release)
@@ -33,9 +33,9 @@ own signing/team and app identifiers; a real key must permit that exact app and
 its signing identity. Do not use AresScan's owner key.
 
 Use a real device for camera acceptance. Tap Open AresEdgeScreen for gallery,
-flashlight, capture and editor. Disable Edit after capture to return original
-bytes directly. The custom embedded example returns original bytes using its own
-buttons. Cancellation shows no image; returned images appear on the home page.
+flashlight and capture. Both presentation modes return original image bytes
+directly. No image editor is included. Cancellation shows no image; returned
+images appear on the home page.
 
 See the repository docs for error handling, licences and platform setup. The
 example can be adapted for licensed integration under the commercial LICENSE.

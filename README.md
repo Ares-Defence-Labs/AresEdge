@@ -2,12 +2,18 @@
 
 # AresEdge
 
+> **Commercial SDK — paid licence required for production use.**
+> AresEdge is proprietary software from Ares Defence Labs. A free 60-second trial
+> is available for evaluation.
+>
+> [Purchase a licence](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview) · [Read the commercial licence](LICENSE)
+
 Commercial document scanning for Flutter by Ares Defence Labs.
 
 Embed a native camera and configurable edge overlay with **AresEdgeEmbedded**, or
 open **AresEdgeScreen** for a minimal back/torch/capture/gallery interface. The
-optional lightweight editor provides perspective cropping, filters, adjustments,
-drawing and text. No AI editor features are included.
+scanner returns original image bytes to your app. Image editing is planned for
+a later release.
 
 ## Try AresEdge in AresScan+
 
@@ -38,14 +44,12 @@ Live document tracking and the automatic capture countdown in AresScan+.
 [Official trailer](https://www.youtube.com/watch?v=QoQ2w-9bvho) ·
 [Explore AresScan+](https://aresdefencelabs.com/ares-scan)
 
-### Scanning and editing screenshots
+### Document scanning
 
-| Document detection | Filters | Image adjustments |
-| --- | --- | --- |
-| <img src="media/scanner.webp" alt="AresScan document scanner detecting a page boundary" width="210"> | <img src="media/image-filters.webp" alt="AresScan image-filter controls" width="210"> | <img src="media/image-adjustments.webp" alt="AresScan image-adjustment workflow" width="210"> |
+<img src="media/scanner.webp" alt="Document scanning with AresEdge in AresScan+" width="280">
 
-Document detection, filters and adjustments in **AresScan+**. Build your own
-scanner controls with AresEdgeEmbedded, or use the compact AresEdgeScreen.
+Document detection in **AresScan+**. Build your own scanner controls with
+AresEdgeEmbedded, or use the compact AresEdgeScreen.
 
 ## Run the performance workbench
 
@@ -77,7 +81,7 @@ a local customer package from Ares Defence Labs before running the example.
 
 - [Installation and quick start](docs/getting-started.md)
 - [Embedded camera and custom controls](docs/embedded-camera.md)
-- [Ready-made scanner and editor](docs/scanner-screen.md)
+- [Ready-made scanner](docs/scanner-screen.md)
 - [Complete public API reference](docs/api-reference.md)
 - [Offline licensing, trial and renewal](docs/licensing.md)
 - [Platform setup and troubleshooting](docs/platforms.md)
@@ -118,16 +122,15 @@ Future<void> scanDocument(BuildContext context) async {
       overlayColor: Colors.teal,
       flashEnabled: false, // Initial torch state; the screen has a torch button.
     ),
-    editAfterCapture: false, // Skip ALL cropping/editing; return original bytes.
   );
   if (bytes == null) return; // Cancelled or trial expired.
   // Save bytes to storage owned by your app, or display Image.memory(bytes).
 }
 ```
 
-Use `editAfterCapture: true` to open the lightweight editor instead. The screen
-includes back, flashlight, capture and gallery controls. You can also push
-`AresEdgeScreen(licenceKey: licenceKey, editAfterCapture: false)` in your own route.
+The screen includes back, flashlight, capture and gallery controls. Capturing or
+selecting an image returns its original bytes directly to the calling app. No
+editor, filters or perspective correction are included in this release.
 
 ## Custom camera: AresEdgeEmbedded
 
@@ -172,7 +175,7 @@ class _CustomScannerState extends State<CustomScanner> {
           overlayColor: Colors.orange,
         ),
         onCapture: (image) {
-          // Embedded mode never opens an editor automatically.
+          // Return the original image to your app.
           // Save image.bytes, or return them to your calling route:
           if (mounted) Navigator.of(context).pop(image.bytes);
         },

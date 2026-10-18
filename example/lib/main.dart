@@ -15,7 +15,7 @@ void main() => runApp(
   ),
 );
 
-/// Demonstrates both public presentation modes and the editor-skip flag.
+/// Demonstrates both scanner presentation modes and returning image bytes.
 class ExampleHome extends StatefulWidget {
   const ExampleHome({super.key});
   @override
@@ -23,7 +23,6 @@ class ExampleHome extends StatefulWidget {
 }
 
 class _ExampleHomeState extends State<ExampleHome> {
-  bool _edit = true;
   Uint8List? _image;
   String? _error;
   Future<void> _scan({required bool embedded}) async {
@@ -32,11 +31,7 @@ class _ExampleHomeState extends State<ExampleHome> {
           ? await Navigator.of(context).push<Uint8List>(
               MaterialPageRoute(builder: (_) => const CustomCamera()),
             )
-          : await AresEdgeScreen.open(
-              context,
-              licenceKey: _licence,
-              editAfterCapture: _edit,
-            );
+          : await AresEdgeScreen.open(context, licenceKey: _licence);
       if (mounted) {
         setState(() {
           _image = bytes;
@@ -56,14 +51,6 @@ class _ExampleHomeState extends State<ExampleHome> {
       children: [
         const Text(
           'Choose the ready-made scanner or supply your own controls.',
-        ),
-        SwitchListTile(
-          title: const Text('Edit after capture'),
-          value: _edit,
-          subtitle: const Text(
-            'Ready-made scanner: crop and edit, or return the original.',
-          ),
-          onChanged: (value) => setState(() => _edit = value),
         ),
         FilledButton(
           onPressed: () => _scan(embedded: false),

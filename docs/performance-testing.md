@@ -78,7 +78,7 @@ A static native camera preview can produce few Flutter frames even while its
 camera stream is smooth: Flutter sample counts are not camera frame rates.
 Capture request acknowledgement is not capture completion; only onCapture ends
 the measured interval. Startup/permission failures are reported as errors.
-The editor is skipped; these measurements do not time cropping or exporting.
+The scanner returns original bytes; measurements do not include host-app image processing.
 
 Copied reports contain environment/configuration, timings and byte sizes, without
 licence keys, image content or filesystem paths. The optional device label is
@@ -95,7 +95,7 @@ This harness never uploads reports. Copy report JSON after stopping so it is sta
 | Scene | Same printed page, fixed distance, bright / dim light, flat / tilted. |
 | Lifetime | First open, warmed camera, repeated captures, background/reopen. |
 | Licensing | Valid key; missing/expired/wrong-app key, including the trial boundary. |
-| UI | Both example presentation modes; editor enabled/disabled for functional checks. |
+| UI | Both scanner presentation modes; capture and gallery return original images. |
 
 Keep OS, display refresh rate, power mode, battery/thermal conditions, lighting,
 document framing and app build mode consistent. Label each run. Cool the device
