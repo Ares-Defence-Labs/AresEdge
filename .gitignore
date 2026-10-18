@@ -22,3 +22,6 @@
 **/.private/
 **/*licence*.json
 .DS_Store
+
+# No local SDK path lockfiles in this unpublished example
+**/pubspec.lock
