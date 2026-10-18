@@ -1,0 +1,24 @@
+# Flutter example build outputs and local SDK paths
+**/.dart_tool/
+**/build/
+**/.flutter-plugins*
+**/pubspec_overrides.yaml
+**/local.properties
+**/.gradle/
+**/Pods/
+**/Podfile.lock
+**/.symlinks/
+**/ephemeral/
+**/Generated.xcconfig
+**/flutter_export_environment.sh
+**/GeneratedPluginRegistrant.*
+**/.idea/
+**/*.iml
+**/xcuserdata/
+**/*.jks
+**/*.keystore
+**/*.p12
+**/*.p8
+**/.private/
+**/*licence*.json
+.DS_Store

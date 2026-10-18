@@ -1,0 +1,144 @@
+ARES DEFENCE LABS — ARESEDGE COMMERCIAL SDK LICENCE AGREEMENT
+Version 1.0 — 18 October 2026
+Copyright (c) 2026 Ares Defence Labs. All rights reserved.
+
+1. PARTIES, ACCEPTANCE AND SCOPE
+This Agreement governs the AresEdge SDK, its compiled libraries, public wrappers,
+models, documentation, examples and updates (Software). "Licensor" is the legal
+entity trading as Ares Defence Labs identified on the applicable purchase order,
+invoice or portal checkout (Order). "Licensee" is the person or entity accepting
+these terms. By installing, copying or using the Software, Licensee accepts this
+Agreement. A person accepting for an entity represents that they can bind it.
+If Licensee does not accept, it must not use or distribute the Software.
+An Order accepted by Licensor may specify application identifiers, platforms,
+products, fees, term, permitted developers and additional rights. A conflicting
+express provision of that Order controls; otherwise this Agreement applies.
+
+2. COMMERCIAL GRANT
+Subject to payment, the Order and compliance with this Agreement, Licensor grants
+Licensee a limited, non-exclusive, non-transferable licence during the authorised
+term to install and use the Software for developing, testing and maintaining the
+applications specified in the Order, and to distribute the Software solely in
+compiled form as an integral part of those applications to their end users.
+End users may run the incorporated Software only as part of the authorised app
+and only while the applicable entitlement permits. No independent SDK licence
+or sublicensing right is granted to end users. Contractors may use the Software
+solely for Licensee's authorised work and under equivalent confidentiality and
+use restrictions; Licensee remains responsible for their compliance. Affiliates,
+additional apps and additional products require express coverage in the Order.
+No ownership, exclusivity or source-code delivery is granted.
+
+3. EVALUATION
+Without a paid entitlement, the Software may be used solely for internal technical
+evaluation under its trial restrictions, including the shared 60-second process
+trial. Restarting an evaluation application does not authorise production use.
+Trial access is not a perpetual, free, production or redistribution licence.
+Licensor may offer different evaluation rights in writing. Trial notices and
+technical limits must not be removed or bypassed. Evaluation ends when withdrawn
+by Licensor, superseded by an Order, or terminated under this Agreement.
+
+4. TERM, KEYS AND RENEWAL
+Unless an Order states otherwise, paid customer entitlements last twelve months
+from their signed term start and end on their signed expiry date. Offline
+verification does not extend the term. Licence keys are specific to permitted
+applications, platforms and products. They must not be shared outside authorised
+development and distribution of those applications. Licensor alone issues keys.
+Renewal, automatic billing, amounts, taxes, cancellation and refunds are governed
+by the accepted Order and checkout terms, subject to mandatory law. Where renewal
+is arranged approximately thirty days before expiry, Licensee must incorporate
+the replacement key and distribute updated applications before the old key
+expires. Existing app installations containing an expired key may enter trial
+or lose protected functionality. There is no implied grace period after expiry
+and no guarantee that an already distributed app can operate perpetually.
+Non-expiring owner entitlements, if expressly issued, are limited to their signed
+scope and do not grant general customer, resale or transfer rights.
+
+5. RESTRICTIONS
+Except as expressly permitted by this Agreement or non-excludable law, Licensee
+must not: (a) resell, sublicense, rent, lend or distribute the Software as an SDK,
+standalone library, development service or competing reusable component;
+(b) distribute implementation source, SDK binaries or models separately from an
+authorised compiled application; (c) extract or use models outside the authorised
+SDK integration, or use them to train another model; (d) reverse engineer,
+decompile, disassemble or attempt to derive proprietary source or model internals;
+(e) forge, alter, share or circumvent keys, signatures, trial controls, identity
+checks or other licensing mechanisms; (f) remove proprietary or third-party
+notices; (g) use the Software unlawfully or infringe third-party rights; or
+(h) represent that Licensor endorses Licensee's application without permission.
+These restrictions do not prohibit activities that applicable law expressly
+permits despite contractual restrictions. Public APIs may be used as documented.
+
+6. DOCUMENTATION, WRAPPERS AND EXAMPLES
+Licensee may read the publicly available documentation and adapt the supplied
+example and public wrapper integration code for evaluation or for its authorised
+applications. This limited permission does not open-source the SDK, waive fees,
+authorise redistribution as an SDK, or grant rights to proprietary implementation
+or models. Licensee may retain copies needed to maintain a lawful integration,
+subject to the term and other restrictions. Public availability on GitHub or a
+package registry does not create an MIT, Apache, BSD or other open-source grant.
+
+7. OWNERSHIP, CONFIDENTIALITY AND THIRD PARTIES
+Licensor and its suppliers retain all intellectual property rights in the Software.
+Licensee retains ownership of its applications and user-created documents.
+Non-public implementation, keys and technical materials must be protected with
+reasonable care and disclosed only to authorised personnel who need them.
+This obligation excludes information independently developed, lawfully received
+without restriction, public without breach, or required to be disclosed by law.
+Third-party components are governed by their own licences and notices, which
+control their respective components. Nothing here restricts rights granted by
+those licences or grants rights Licensor does not own. Applicable third-party
+notices must accompany distributions as required. Licensor trademarks are not
+licensed except to truthfully identify the Software in an integration.
+
+8. SUPPORT, UPDATES AND APPLICATION RESPONSIBILITY
+Support, updates, service levels and maintenance are supplied only as expressly
+agreed in the Order. No particular feature, compatibility, response time or future
+release is promised. Licensee is responsible for application testing, privacy,
+permissions, backups, distribution, secure handling of documents and keys, and
+compliance with store policies and law. The Software is not represented as
+unhackable or suitable for safety-critical use. On-device code and models can
+be inspected or extracted; licence verification is not a confidentiality guarantee.
+
+9. WARRANTY AND MANDATORY RIGHTS
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS" AND
+"AS AVAILABLE", WITHOUT WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, NON-INFRINGEMENT, ACCURACY OR UNINTERRUPTED/ERROR-FREE OPERATION.
+Nothing excludes, restricts or modifies rights, guarantees, remedies or liability
+that cannot lawfully be excluded, including applicable consumer guarantees.
+Any expressly agreed warranty in an Order applies according to its terms.
+
+10. LIABILITY
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEITHER PARTY IS LIABLE UNDER THIS
+AGREEMENT FOR INDIRECT OR CONSEQUENTIAL LOSS, LOST PROFITS, REVENUE, BUSINESS
+OPPORTUNITIES OR DATA. LICENSOR'S AGGREGATE LIABILITY ARISING FROM THE SOFTWARE
+OR THIS AGREEMENT WILL NOT EXCEED FEES PAID BY LICENSEE FOR THE AFFECTED SDK IN
+THE TWELVE MONTHS PRECEDING THE EVENT GIVING RISE TO THE CLAIM. These limitations
+do not limit liability that cannot lawfully be limited, Licensee's payment
+obligations, or liability for misuse of Licensor's intellectual property or breach
+of the confidentiality/use restrictions. Mandatory remedies remain available.
+
+11. SUSPENSION AND TERMINATION
+The commercial grant expires at the end of the purchased term unless renewed.
+Either party may terminate for a material breach not cured within thirty days
+of written notice. Licensor may terminate immediately for deliberate licence
+circumvention or unauthorised SDK/key/model redistribution. On expiry or
+termination Licensee must stop new distribution and protected production use,
+remove the Software from future releases, and delete unauthorised copies, subject
+to any express surviving rights in an Order and legally required archival copies.
+There is no obligation or representation that offline installations can be
+remotely deleted. Ownership, accrued payment obligations, confidentiality,
+restrictions, disclaimers, liability and dispute provisions survive as applicable.
+
+12. GENERAL
+The governing law and dispute forum are those specified in the Order; where none
+is specified, they are the law and competent courts of Licensor's principal place
+of business, subject to mandatory rights. The parties should first attempt good
+faith resolution through the contact details on the Order or official portal.
+Licensee may not assign this Agreement without Licensor's written consent except
+where mandatory law requires otherwise. Invalid provisions are limited only to
+the extent necessary; remaining provisions continue. A failure to enforce is not
+a waiver. This Agreement and accepted Order constitute the entire agreement
+about the Software, superseding conflicting informal statements. Changes to a
+purchased grant require agreement; later posted terms do not retroactively alter
+that grant without a valid acceptance mechanism. No third-party beneficiary
+rights are created. Rights not expressly granted are reserved.

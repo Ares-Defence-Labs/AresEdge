@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a reproducible AresEdge integration problem.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: Do not include licence keys, customer documents or signing credentials.
+  - type: input
+    id: versions
+    attributes:
+      label: AresEdge and Flutter versions
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform, OS version and device
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction and steps
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual result
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted errors or screenshots

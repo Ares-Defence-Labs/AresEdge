@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Purchase or renew AresEdge
+    url: https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview
+    about: Obtain a commercial licence or manage your purchase in the portal.
+  - name: Private security report
+    url: mailto:team@aresdefencelabs.com
+    about: Do not disclose licence bypasses or credentials publicly.

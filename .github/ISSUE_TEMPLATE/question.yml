@@ -1,0 +1,21 @@
+name: Integration question
+description: Ask about the public AresEdge API or example.
+title: "[Question] "
+body:
+  - type: markdown
+    attributes:
+      value: Read the guides first. Never include licence keys or private documents.
+  - type: textarea
+    id: question
+    attributes:
+      label: What are you trying to build?
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: SDK version, Flutter version and platform
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What have you tried?
