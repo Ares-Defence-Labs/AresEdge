@@ -96,7 +96,7 @@ This harness never uploads reports. Copy report JSON after stopping so it is sta
 | Scene | Same printed page, fixed distance, bright / dim light, flat / tilted. |
 | Lifetime | First open, warmed camera, repeated captures, background/reopen. |
 | Licensing | Valid customer key in multiple apps; missing/expired/wrong-product or wrong-environment key, including the trial boundary. Owner grants additionally require their bound app/signer. |
-| UI | Both scanner presentation modes; capture and gallery return extracted documents. |
+| UI | Both scanner modes; activity editor Save/Cancel and photoEditor:false direct cropped return. Benchmark embedded editing tools separately from camera inference. |
 
 Keep OS, display refresh rate, power mode, battery/thermal conditions, lighting,
 document framing and app build mode consistent. Label each run. Cool the device

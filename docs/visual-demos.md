@@ -27,3 +27,16 @@ Install [AresScan+](https://aresdefencelabs.com/ares-scan) to try the app, or ru
 [example project](example-project.md) to try the actual public SDK widgets.
 Use the [performance workbench](performance-testing.md) to benchmark camera
 throughput and detector latency on your hardware.
+
+## Cropper, filters and text controls
+
+These AresScan+ workflow references illustrate document crop interaction, preset
+previews and text entry. The AresEdge activity provides its own fixed five-tool
+UI; embedded components let you compose your own. AI Tools, OCR and advanced
+text formatting in the app references are outside the current SDK feature set.
+
+[![Cropper with magnifier](../media/editor-cropper.png)](cropper.md)
+
+[![Filter previews](../media/editor-filters.png)](filters.md)
+
+[![Text controls](../media/editor-text.png)](image-editor.md#crop-filter-and-text-workflows)

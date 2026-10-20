@@ -135,3 +135,11 @@ opening an editor. `image.isDocumentCropped` confirms extraction and
 `DOCUMENT_NOT_FOUND` through `onError`; no full-frame success is substituted.
 `extractDocument:false` explicitly opts into full-frame capture. Configure the
 maximum output side with `maxDocumentDimension` (default 1600, range 256–4096).
+
+## Add only the editing tools you need
+
+Embedded capture delivers the image to your callback. Your app can then create
+one editor controller and embed only Crop, Draw, Filters, Text or Adjust widgets.
+You own the layout and navigation. Alternatively open `AresEdgePhotoEditor.open`
+for the Ares Defence Labs fixed activity UI with colour customisation only.
+See [editor integrations](image-editor.md) and [cropper/magnifier](cropper.md).

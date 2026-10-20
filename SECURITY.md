@@ -57,3 +57,13 @@ Third-party licences and covered-source references accompany the customer packag
 in `THIRD_PARTY_NOTICES.md` and `SOURCE_AVAILABILITY.md`. The unchanged document
 model is the hash-verified DocsaidLab DocAligner FastViT-T8 Apache 2.0 checkpoint;
 its original licence rights survive renaming and encrypted packaging.
+
+## Modular editor (local next release)
+
+Native image sessions validate the same offline entitlement/shared process trial
+at creation, during interactions and before native operations/export results.
+Recreating a controller or session does not reset that trial. Native session ids
+are engine-local handles, not access grants. Inputs, output resolution, pixel
+count, session count and undo history are bounded. Editing requires no network
+request; explicit purchase links open the browser on user action. Model and
+image buffers on an attacker-controlled device remain inspectable.

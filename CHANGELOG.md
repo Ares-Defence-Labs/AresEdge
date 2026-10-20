@@ -1,5 +1,35 @@
 # Changelog
 
+## Unreleased
+
+- Clarify embedded composition versus fixed colour-customisable activity UI; add cropper, filter and text workflow screenshots and document candidate API gaps before release.
+
+- Build the native filter core with 16 KiB ELF/RELRO alignment and reject misaligned Android customer binaries during package validation.
+
+- Include the full AresScan filter catalogue in the native editor, with strength, parameter controls and custom LUT support; share preset discovery with AresScan.
+
+- Size Google Play and App Store README badges consistently with compact PNG
+  assets and standard Markdown links for pub.dev and GitHub rendering.
+
+- Open the SDK image editor first with a cropped preview; preserve the full
+  captured photo for its on-demand Adjust crop activity, seed detected
+  corners, and provide Retake/Detect/Done, shaded surroundings, dashed guides and
+  white corner handles with a source-aligned magnifier. Animate Auto Detect
+  corner/grid transitions without replacing the source image. Add non-destructive
+  `detectCorners()` to the reusable editor controller. Direct capture without
+  the editor still returns the perspective-cropped document.
+
+- Add basic offline text annotations and native filter preview cards; simplify the SDK activity to Document scanning with Auto/Manual controls and no templates or specialisations.
+
+- Align ready-made scanner/editor pages and native embedded controls with the AresScan mint palette, rounded tool docks and light/dark surfaces.
+
+- Add a local, unpublished modular native photo editor with crop/magnifier, drawing, filters and tonal adjustments.
+- Open the editor by default from the scanner; allow developers to skip it or embed individual editing components.
+
+- Verify the commercial customer package against pub.dev scoring conventions without exposing private SDK source.
+
+AresEdge v2.1.0
+
 ## 2.0.2 — 2026-10-19
 
 - Resolve all ten public-wrapper flow-control lints and verify Dart formatting.

@@ -13,8 +13,9 @@ define, never an end-user activation dialog. Replace it in every app and distrib
 updates before its expiry; older installations with an expired key show the trial
 popup and are subject to the live-session trial lock. See [licensing and renewal](licensing.md).
 
-The planned pub.dev name is `ares_edge`. It has not been published. For now use
-the supplied **customer binary package**, not this documentation repository:
+The hosted 2.0.x package is scanner-only. The editor described here is the
+unpublished **2.1.0 candidate**. Evaluate it using the local customer binary
+package, not a dependency on the documentation repository:
 
 ```yaml
 dependencies:
@@ -29,9 +30,10 @@ Do not use a Git dependency pointing at the public documentation repository: it
 is not the SDK package. After an actual release, use the version announced in
 its release notes rather than guessing a hosted version.
 
-Use the single public import `package:ares_edge/ares_edge.dart`. Only the nine
-[scanning API types](api-reference.md#public-api-boundary) are supported; editor,
-cropper and internal adapter APIs are not exposed.
+Use the single public import `package:ares_edge/ares_edge.dart`. The nine
+[scanning API types](api-reference.md#public-api-boundary) remain available.
+The local 2.1.0 API adds the [modular editor](image-editor.md); legacy owner
+cropper/editor classes and internal adapters remain private.
 
 ## Ready-made scanner
 
@@ -54,7 +56,8 @@ Future<void> scan(BuildContext context) async {
 ```
 
 Capture or gallery selection returns cropped, perspective-corrected document
-bytes directly, without navigating through an editor. Cancellation or trial expiry returns null. The
+bytes. In local 2.1.0 development, `photoEditor` defaults to true and opens
+the basic editor before return. Set it to false for direct cropped output. Cancellation or trial expiry returns null. The
 result has no SDK-managed persistent file.
 
 ## Licence at build time
@@ -69,3 +72,10 @@ from an app. Signed offline tokens prevent forgery, not binary patching.
 Omit the define to exercise the 60-second process trial.
 
 Use [AresEdgeEmbedded](embedded-camera.md) for a camera under your own UI.
+
+## Choose the editor integration
+
+Compose the embedded Crop, Draw, Filters, Text and Adjust components for your own
+UI, or open the Ares Defence Labs activity for its fixed five-tool interface.
+The activity supports colour customisation only. See [the editor integration
+contract](image-editor.md) and [cropper guide](cropper.md).
