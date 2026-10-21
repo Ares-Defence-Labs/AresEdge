@@ -13,26 +13,22 @@ define, never an end-user activation dialog. Replace it in every app and distrib
 updates before its expiry; older installations with an expired key show the trial
 popup and are subject to the live-session trial lock. See [licensing and renewal](licensing.md).
 
-The hosted 2.0.x package is scanner-only. The editor described here is the
-unpublished **2.1.0 candidate**. Evaluate it using the local customer binary
-package, not a dependency on the documentation repository:
+Install the published Flutter package from pub.dev:
 
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
-  ares_edge:
-    path: /absolute/path/to/customer-package
+  ares_edge: ^2.1.0
 ```
 
 Run `flutter pub get`. Configure [Android and iOS](platforms.md) before launching.
-Do not use a Git dependency pointing at the public documentation repository: it
-is not the SDK package. After an actual release, use the version announced in
-its release notes rather than guessing a hosted version.
+The public GitHub repository contains documentation and issue tracking; use the
+hosted dependency above rather than a Git dependency on that repository.
 
 Use the single public import `package:ares_edge/ares_edge.dart`. The nine
 [scanning API types](api-reference.md#public-api-boundary) remain available.
-The local 2.1.0 API adds the [modular editor](image-editor.md); legacy owner
+The 2.1.0 API adds the [modular editor](image-editor.md); legacy owner
 cropper/editor classes and internal adapters remain private.
 
 ## Ready-made scanner
@@ -56,7 +52,7 @@ Future<void> scan(BuildContext context) async {
 ```
 
 Capture or gallery selection returns cropped, perspective-corrected document
-bytes. In local 2.1.0 development, `photoEditor` defaults to true and opens
+bytes. In 2.1.0, `photoEditor` defaults to true and opens
 the basic editor before return. Set it to false for direct cropped output. Cancellation or trial expiry returns null. The
 result has no SDK-managed persistent file.
 

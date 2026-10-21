@@ -55,5 +55,5 @@ customise colour codes rather than adding/removing tools or supplying custom
 button/layout builders. The photoEditor flag controls whether editing is opened;
 it is not a UI-builder setting. For a composed interface, use
 [AresEdgeEmbedded](embedded-camera.md) with the [embedded editor components](image-editor.md).
-The candidate’s existing broader editorOptions still need restriction before
-release; supported colours and this gap are listed in the editor guide.
+Use `editorColors: AresEdgeEditorColors(...)` for activity colours. Tool lists,
+layout and component/session options are SDK-owned on this route.

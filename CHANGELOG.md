@@ -1,8 +1,16 @@
 # Changelog
 
-## Unreleased
+## 2.1.0 — 2026-10-21
 
-- Clarify embedded composition versus fixed colour-customisable activity UI; add cropper, filter and text workflow screenshots and document candidate API gaps before release.
+- Preserve store-delivered model packaging for owner apps using the same compiled customer core; standard customer apps bundle the encrypted model by default.
+
+- Verify the company publisher independently of source repository metadata and retain the requested editor version across pre-allocation corrective pushes.
+
+- Enable main-push release allocation, macOS native builds, pub.dev publication and documentation-only GitHub releases for the modular editor release.
+
+- Separate fixed activity colours from embedded component/session options; add cropper, filter and text workflow screenshots.
+- Add portable typography controls, host-owned component toolbars, crop/stroke/colour-matrix commands, and bounded undo/redo.
+- Route AresScan’s existing filter, adjustment and crop controls through the shared licensed native editor without replacing its owner UI.
 
 - Build the native filter core with 16 KiB ELF/RELRO alignment and reject misaligned Android customer binaries during package validation.
 
@@ -23,7 +31,7 @@
 
 - Align ready-made scanner/editor pages and native embedded controls with the AresScan mint palette, rounded tool docks and light/dark surfaces.
 
-- Add a local, unpublished modular native photo editor with crop/magnifier, drawing, filters and tonal adjustments.
+- Add a modular native photo editor with crop/magnifier, drawing, filters and tonal adjustments.
 - Open the editor by default from the scanner; allow developers to skip it or embed individual editing components.
 
 - Verify the commercial customer package against pub.dev scoring conventions without exposing private SDK source.

@@ -1,7 +1,7 @@
-# Image editor: embedded components or activity route (2.1.0 candidate)
+# Image editor: embedded components or activity route (2.1.0)
 
-This API is being prepared locally. It is not available in the published 2.0.x
-package yet. Use the rebuilt local customer package to evaluate it.
+Available in AresEdge **2.1.0** for Android and iOS. Install `ares_edge: ^2.1.0`
+to use the scanner and modular native editor.
 
 ## Choose how to integrate
 
@@ -13,13 +13,10 @@ package yet. Use the rebuilt local customer package to evaluate it.
 | Navigation and output | Your app decides when to crop, export, save or cancel. | Scan → image editor → Save returns edited PNG bytes; Crop opens its separate page. |
 | Skip editing | Handle the camera callback directly. | Set `photoEditor: false` to return the cropped document immediately. |
 
-**Candidate status:** this is the integration contract for the unpublished 2.1.0
-release. The current candidate still accepts broader `AresEdgeEditorOptions`
-overrides on activity routes. Those need separating/restricting before release.
-Do not rely on tool-selection, magnifier or layout overrides on an activity.
-Current activity colour inputs are `cropColor` and `drawingColor`, plus scanner
-`overlayColor`, `gridColor` and `captureTraceColor`. A general activity palette API
-is not yet exposed; no additional colour property names are assumed here.
+The activity accepts `AresEdgeEditorColors` only. Its tool list, order, controls,
+magnifier and layout are fixed by the SDK. Embedded sessions use
+`AresEdgeEditorOptions` and each component can hide its built-in footer with
+`showControls: false` when the host provides its own controls.
 
 “Activity route” means the SDK-provided Flutter page in your existing Android
 Activity/iOS UIViewController, not a separately exported Android Activity class.
@@ -37,9 +34,10 @@ final image = await AresEdgeScreen.open(
     gridColor: Color(0x66FFFFFF),
     captureTraceColor: Color(0xFFFFB74D),
   ),
-  editorOptions: const AresEdgeEditorOptions(
-    cropColor: Color(0xFF79FFE1),
-    drawingColor: Color(0xFFFF5252),
+  editorColors: const AresEdgeEditorColors(
+    primary: Color(0xFF79FFE1),
+    crop: Color(0xFF79FFE1),
+    drawing: Color(0xFFFF5252),
   ),
 );
 ```
@@ -99,13 +97,18 @@ AresEdgeText(controller: editor);
 await editor.setFilter(AresEdgeFilter.monochrome);
 await editor.adjust(brightness: 0.1, contrast: 1.15, saturation: 1);
 await editor.autoAdjust();
-await editor.addText('Reviewed', color: Colors.white, fontSize: 48,
+await editor.addText('Reviewed',
+  style: const AresEdgeTextStyle(color: Colors.white, fontSize: 48,
+    fontFamily: 'sans', bold: true, letterSpacing: 1, lineHeight: 1.2),
   position: const Offset(0.5, 0.8));
+await editor.configureDrawing(color: Colors.orange, width: 8);
+await editor.drawStroke([const Offset(0.1, 0.5), const Offset(0.9, 0.5)]);
 await editor.detectCorners(); // Updates handles, preserves the full source.
 // await editor.autoCrop(); // Detects and immediately extracts instead.
 await editor.applyCrop();
 await editor.rotate();
 await editor.undo();
+await editor.redo();
 await editor.reset();
 final png = await editor.exportImage();
 
@@ -124,7 +127,7 @@ brightness/contrast without a remote or generative AI service. Drawing is
 freehand; the [complete filter catalogue](filters.md) includes all 37 AresScan presets and Sepia, with strength, parameter controls and custom LUTs. Tonal controls are brightness,
 contrast and saturation. Filter/tonal settings are non-destructive until a pixel
 operation commits them. Undo history is bounded; its availability is reported by
-`controller.canUndo`. Reset restores the initially decoded source.
+`controller.canUndo` and `controller.canRedo`. Reset restores the initially decoded source.
 
 Listen to the controller to update your own buttons. Disable them while
 `isBusy`; handle `PlatformException` from commands, including `LICENCE_REQUIRED`.
@@ -139,9 +142,8 @@ final edited = await AresEdgePhotoEditor.open(
   context,
   imageBytes: sourceBytes,
   licenceKey: configuredKey,
-  options: const AresEdgeEditorOptions(
-    cropColor: Color(0xFF79FFE1),
-    drawingColor: Color(0xFFFF5252),
+  colors: const AresEdgeEditorColors(
+    crop: Color(0xFF79FFE1), drawing: Color(0xFFFF5252),
   ),
 );
 // edited is null on cancel/expired access, otherwise edited PNG bytes.
@@ -165,8 +167,8 @@ is not a licence or a way to reset the trial.
 Images remain on device. Inputs are limited to 32 MiB and 20 million source
 pixels; decoded/editor output is limited to 8 million pixels and the requested
 maximum longest side (default 2048, configurable 256–4096). EXIF orientation is
-normalized before handles/drawing are mapped. Undo is limited to three snapshots
-and a 32 MiB snapshot pixel budget. At most two native sessions may be active
+normalized before handles/drawing are mapped. Undo and redo together are limited to three snapshots
+and a 32 MiB snapshot pixel budget. A new edit clears redo history. At most two native sessions may be active
 per Flutter engine. Dispose sessions promptly. Native image processing/drawing
 is compiled into the SDK; only the documented Dart API and integration wrappers
 are readable in the customer package. Offline/on-device protection is not a
@@ -212,12 +214,32 @@ in the app screenshot are not included. See [all filters and controls](filters.m
 
 [![Text controls in AresScan+](../media/editor-text.png)](../media/editor-text-full.png)
 
-Text controls in AresScan+. The current SDK supports adding a caption, choosing
-its colour and size, positioning it, and undoing it. OCR/Extract Text, font-family
-selection, bold/italic/underline, letter spacing and line height shown in this
-reference are not implemented in the current SDK candidate. These are reference
-images of the AresScan+ workflows, not a promise of every app-specific control.
+The Text component provides portable system/sans/serif/monospace families,
+bold, italic, underline, left/centre/right alignment, colour, font size,
+letter spacing and line height. The same controls are available in the activity.
+OCR/Extract Text shown in the AresScan+ reference remains an app-only feature.
+Text is rasterized when applied; Undo/Redo restores or reapplies the annotation.
 
 For a custom text interface, embed `AresEdgeText(controller: editor)` and connect
 host-owned controls to `editor.addText(...)`. The activity provides its own Text
 tool; developers customise its colours rather than replacing that interface.
+
+## Palette and host-owned controls
+
+`AresEdgeEditorColors` exposes `primary`, `onPrimary`, `surface`, `card`, `panel`,
+`foreground`, `outline`, `crop`, `drawing` and `annotation`. Null roles use the SDK
+light/dark defaults. The activity accepts this palette without accepting custom
+layouts or tool lists. Camera overlay colours remain in `AresEdgeOptions`.
+
+For a custom toolbar, set `showControls: false` on an embedded component. The canvas
+still handles crop dragging/magnification, freehand drawing and text placement.
+Use `setCropCorners`/`resetCrop`, `configureDrawing`/`drawStroke`, `addText`,
+`setFilter`, `adjust` or `applyColorMatrix` from host controls. `load()` initializes
+a headless session; `imageSize` and `cropCorners` expose its current geometry.
+A colour matrix has twenty row-major Flutter 4×5 entries; offsets are in 0–255
+channel units. Every operation stays subject to native licence checks.
+
+`compositeImage(bytes, destination: normalizedRect)` commits a host-rendered
+transparent PNG overlay with source-over alpha and clipping. It lets existing
+text, drawing or sticker interfaces keep custom fonts and authoring controls
+while the SDK handles composition, native licence enforcement and undo/redo.

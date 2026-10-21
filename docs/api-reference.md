@@ -81,14 +81,14 @@ toolbar/editor/navigation. Requires bounded constraints. Lifecycle-managed.
 const AresEdgeOptions(),
 ValueChanged<Uint8List?>? onComplete, ValueChanged<String>? onError,
 ValueChanged<AresEdgePerformance>? onPerformance, bool photoEditor = true,
-AresEdgeEditorOptions editorOptions = const AresEdgeEditorOptions()})`
+AresEdgeEditorColors editorColors = const AresEdgeEditorColors()})`
 
 | Member | Contract |
 | --- | --- |
 | licenceKey | Same signed offline key as embedded. |
 | options | Same immutable camera configuration. |
 | photoEditor | True opens the five-mode editor; false returns cropped bytes immediately. Local 2.1.0 API. |
-| editorOptions | Candidate colour settings (`cropColor`, `drawingColor`). The activity contract has a fixed five-tool UI; broader legacy overrides in the unpublished candidate must not be relied on. See image-editor.md. |
+| editorColors | Palette for the fixed five-tool activity. See image-editor.md for all colour roles. |
 | onComplete | Optional callback, called once. Without it the route pops. Null indicates cancel/expiry. |
 | onError | Reports failures, also shown on screen. |
 | onPerformance | Native telemetry while the scanner camera is active; null disables it. |
@@ -96,7 +96,7 @@ AresEdgeEditorOptions editorOptions = const AresEdgeEditorOptions()})`
 `static Future<Uint8List?> open(BuildContext context, {String? licenceKey,
 AresEdgeOptions options = const AresEdgeOptions(),
 ValueChanged<AresEdgePerformance>? onPerformance, bool photoEditor = true,
-AresEdgeEditorOptions editorOptions = const AresEdgeEditorOptions()})`
+AresEdgeEditorColors editorColors = const AresEdgeEditorColors()})`
 opens a fullscreen-dialog Flutter route. Await edited PNG bytes (default),
 immediate captured/cropped bytes (`photoEditor: false`), or null.
 Check context.mounted before subsequent navigation. Back dismisses the screen;
@@ -150,7 +150,7 @@ The native channel adapter is a library-private Dart part. It cannot be imported
 as a separate library and its classes cannot be referenced from consumer code.
 There is no customer compatibility `Edge*` library, activation service API,
 `QuadFrame`, legacy CropperPage/EdgePhotoEditor, identity parser or owner implementation API.
-The local 2.1.0 public editor types are documented below and in the editor guide.
+The 2.1.0 public editor types are documented below and in the editor guide.
 Document extraction remains internal; it does not require an exposed cropper.
 Pass the purchased licence key through the camera/screen configuration.
 
@@ -173,9 +173,9 @@ perspective-corrected without an editor route. Missing geometry reports
 Circular extraction returns PNG with transparent corners; rectangular extraction
 normally returns JPEG. Output orientation is upright with the crop applied.
 
-## Modular editor — local next-release API
+## Modular editor — 2.1.0
 
-`AresEdgeScreen` adds `photoEditor = true` and `editorOptions`. `AresEdgeEmbedded`
+`AresEdgeScreen` adds `photoEditor = true` and `editorColors`. `AresEdgeEmbedded`
 keeps returning captured images directly; your own UI decides whether to edit.
 
 Public editing types: `AresEdgeEditorMode`, `AresEdgeFilter`, `AresEdgeEditorOptions`,
@@ -183,7 +183,7 @@ Public editing types: `AresEdgeEditorMode`, `AresEdgeFilter`, `AresEdgeEditorOpt
 `AresEdgeAdjustments`, and `AresEdgePhotoEditor`. See [the editor guide](image-editor.md)
 for constructors, shared session ownership, tool options, commands, output,
 limits, error handling and offline licence/trial behaviour. All public members
-also have Dart API comments. The published 2.0.x API remains scanner-only.
+also have Dart API comments. Versions 2.0.x provide scanning; upgrade to 2.1.0 for these editor APIs.
 
 With `photoEditor: true`, the SDK activity retains the full captured photo and
 opens the image editor first with a cropped preview. Selecting Crop restores
@@ -205,11 +205,11 @@ controller. The host owns composition, navigation and surrounding controls.
 `AresEdgeScreen` and `AresEdgePhotoEditor` provide the fixed activity UI: all five
 tools, SDK-defined layout and navigation, colour customisation only.
 
-The current unpublished `AresEdgeEditorOptions.modes` field still changes activity
-tabs, and other session options are forwarded. This is an implementation gap
-against the final colour-only activity contract; it must be separated/restricted
-before 2.1.0 publication. Do not advertise it as activity customisation. Existing
-colour fields are cropColor/drawingColor; scanner colours are documented above.
+Activity routes accept `AresEdgeEditorColors` only. Embedded sessions accept
+`AresEdgeEditorOptions`, while each component exposes `showControls` for host-owned
+controls. `AresEdgeTextStyle` defines portable typography. Controller operations
+include crop handles, drawing strokes, colour matrices, undo/redo and export.
+The complete generated declaration reference is published alongside these guides.
 
 See [editor integration](image-editor.md), [cropper](cropper.md), and
 [filters](filters.md) for examples, behaviour and image references.

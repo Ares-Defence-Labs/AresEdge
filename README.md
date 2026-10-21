@@ -20,8 +20,7 @@ capture and perspective-corrected image cropping for Android and iOS.
 
 Embed a native camera and configurable edge overlay with **AresEdgeEmbedded**, or
 open **AresEdgeScreen** for a minimal back/torch/capture/gallery interface. The
-scanner returns a cropped, perspective-corrected document. The local next-release
-API opens a basic photo editor by default (`photoEditor: true`); set it to false
+scanner returns a cropped, perspective-corrected document. Version 2.1.0 opens a basic photo editor by default (`photoEditor: true`); set it to false
 for immediate image return. Embed crop/magnifier, drawing, filters, text and adjustments
 individually with a shared editor controller. See [modular image editing](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/image-editor.md).
 
@@ -44,12 +43,11 @@ custom layouts and tool selection belong to the embedded route.
 [![Text annotation controls](https://raw.githubusercontent.com/Ares-Defence-Labs/AresEdge/main/media/editor-text.png)](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/image-editor.md#crop-filter-and-text-workflows)
 
 AresScan+ workflow references: AresEdge includes Crop, Draw, Filters, Text and
-Adjust. AI Tools, OCR/Extract Text and the richer text formatting shown in the
-app screenshots are not part of the current SDK candidate. See the
-[editor guide and candidate API status](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/image-editor.md).
+Adjust. AI Tools, OCR/Extract Text shown in the app screenshots are not included. Portable text formatting is
+available through the Text component. See the
+[editor guide](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/image-editor.md).
 
-**Local development:** the modular editor is not available in published 2.0.x yet.
-Build and test the local 2.1.0 customer package before publication.
+**Version 2.1.0** includes the scanner, modular editor and provided five-tool activity.
 
 Automatic scanning follows AresScan: hold a confident document steady, watch
 its two-second countdown, and receive the cropped document. Moving the document or
@@ -140,7 +138,7 @@ See [performance testing](https://github.com/Ares-Defence-Labs/AresEdge/blob/mai
 matrix, measurement definitions and report-comparison script, and
 [visual demos](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/visual-demos.md) for media sources and feature scope.
 
-**Current release:** [ares_edge 2.0.2](https://pub.dev/packages/ares_edge/versions/2.0.2).
+**Current release:** [ares_edge 2.1.0](https://pub.dev/packages/ares_edge/versions/2.1.0).
 
 - [Installation and quick start](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/getting-started.md)
 - [Embedded camera and custom controls](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/embedded-camera.md)
