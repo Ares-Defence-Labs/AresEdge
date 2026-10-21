@@ -1,6 +1,6 @@
 # Image cropper and magnifier
 
-Available in AresEdge **2.1.0**. Import
+Available in AresEdge **2.1.1**. Import
 `package:ares_edge/ares_edge.dart`.
 
 [![Perspective crop handles with dashed grid and magnifier](../media/editor-cropper.png)](../media/editor-cropper-full.png)

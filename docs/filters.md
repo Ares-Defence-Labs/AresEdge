@@ -1,6 +1,6 @@
 # Image filters
 
-Available in AresEdge **2.1.0** for Android and iOS.
+Available in AresEdge **2.1.1** for Android and iOS.
 
 The SDK includes the complete 37-preset AresScan catalogue and the additional Sepia preset. AresScan’s existing filter picker reads its available preset names and order from this shared SDK catalogue, preserving its UI and existing shader renderer. The customer SDK implements the filters in compiled native processing on Android and iOS.
 

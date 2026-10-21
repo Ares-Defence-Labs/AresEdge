@@ -20,7 +20,7 @@ capture and perspective-corrected image cropping for Android and iOS.
 
 Embed a native camera and configurable edge overlay with **AresEdgeEmbedded**, or
 open **AresEdgeScreen** for a minimal back/torch/capture/gallery interface. The
-scanner returns a cropped, perspective-corrected document. Version 2.1.0 opens a basic photo editor by default (`photoEditor: true`); set it to false
+scanner returns a cropped, perspective-corrected document. Version 2.1.1 opens a basic photo editor by default (`photoEditor: true`); set it to false
 for immediate image return. Embed crop/magnifier, drawing, filters, text and adjustments
 individually with a shared editor controller. See [modular image editing](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/image-editor.md).
 
@@ -47,7 +47,7 @@ Adjust. AI Tools, OCR/Extract Text shown in the app screenshots are not included
 available through the Text component. See the
 [editor guide](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/image-editor.md).
 
-**Version 2.1.0** includes the scanner, modular editor and provided five-tool activity.
+**Version 2.1.1** includes the scanner, modular editor and provided five-tool activity.
 
 Automatic scanning follows AresScan: hold a confident document steady, watch
 its two-second countdown, and receive the cropped document. Moving the document or
@@ -138,7 +138,7 @@ See [performance testing](https://github.com/Ares-Defence-Labs/AresEdge/blob/mai
 matrix, measurement definitions and report-comparison script, and
 [visual demos](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/visual-demos.md) for media sources and feature scope.
 
-**Current release:** [ares_edge 2.1.0](https://pub.dev/packages/ares_edge/versions/2.1.0).
+**Current release:** [ares_edge 2.1.1](https://pub.dev/packages/ares_edge/versions/2.1.1).
 
 - [Installation and quick start](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/getting-started.md)
 - [Embedded camera and custom controls](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/embedded-camera.md)
@@ -201,7 +201,7 @@ Future<void> scanDocument(BuildContext context) async {
 
 The screen includes back, flashlight, capture and gallery controls. Capturing or
 selecting an image returns its detected document, cropped and perspective-corrected,
-in the direct-return path. In the local 2.1.0 API, the default path opens the image editor first with a cropped preview. Tap Crop
+in the direct-return path. In the local 2.1.1 API, the default path opens the image editor first with a cropped preview. Tap Crop
 to adjust detected corners over the retained full photo, with a drag magnifier
 and Retake / Detect / Done controls. Set
 `photoEditor: false` to return the cropped image immediately. Saving the editor
@@ -301,7 +301,7 @@ licence. See [LICENSE](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/L
 Both camera capture and gallery import extract the detected document by default.
 The native core crops to the four detected corners, corrects perspective and
 returns compressed image bytes. `AresEdgeEmbedded` returns these directly;
-`AresEdgeScreen` opens its basic editor by default in the local 2.1.0 API.
+`AresEdgeScreen` opens its basic editor by default in the local 2.1.1 API.
 Set `photoEditor: false` for direct cropped return. A missing usable boundary reports `DOCUMENT_NOT_FOUND`, so your app
 can ask the user to align the document and try again.
 
@@ -316,7 +316,7 @@ own processing. This flag is independent of `photoEditor`.
 
 Use `package:ares_edge/ares_edge.dart` for `AresEdgeEmbedded`, `AresEdgeScreen`,
 `AresEdgeController`, `AresEdgeOptions`, `AresEdgeImage`, `AresEdgeScanState`,
-`AresEdgePerformance`, `AresEdgeQuality` and `AresEdgeShape`. The local 2.1.0 API
+`AresEdgePerformance`, `AresEdgeQuality` and `AresEdgeShape`. The local 2.1.1 API
 also exposes the documented `AresEdgeEditorController`, options/modes/filter types,
 `AresEdgePhotoEditor`, `AresEdgeCropper`, `AresEdgeDrawing`, `AresEdgeFilters`, `AresEdgeText` and
 `AresEdgeAdjustments`. Legacy owner cropper/editor classes, activation helpers
@@ -325,4 +325,4 @@ See the [API reference](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/
 
 ### Complete filter catalogue
 
-The 2.1.0 editor includes all 37 AresScan presets, plus Sepia. Discover available filters through `AresEdgeFilter.aresScanPresets` or `AresEdgeFilter.values`, and configure strength, preset parameters and custom LUTs. See the [filter reference](docs/filters.md).
+The 2.1.1 editor includes all 37 AresScan presets, plus Sepia. Discover available filters through `AresEdgeFilter.aresScanPresets` or `AresEdgeFilter.values`, and configure strength, preset parameters and custom LUTs. See the [filter reference](docs/filters.md).

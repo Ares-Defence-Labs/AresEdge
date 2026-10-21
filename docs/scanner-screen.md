@@ -15,7 +15,7 @@ if (bytes == null) return;
 ```
 
 Camera capture and gallery selection return the detected document, cropped and
-perspective-corrected in the native core. In the local 2.1.0 API, `photoEditor: true` opens the image editor first with a cropped preview. Tap Crop to adjust detected corners over the retained full photo; Done returns to the editor.
+perspective-corrected in the native core. In the local 2.1.1 API, `photoEditor: true` opens the image editor first with a cropped preview. Tap Crop to adjust detected corners over the retained full photo; Done returns to the editor.
 Set `photoEditor: false` for direct cropped return. Cancelling editing resumes
 scanning; Save returns edited PNG bytes. See [modular image editing](image-editor.md). A missing boundary reports DOCUMENT_NOT_FOUND and keeps the scanner
 available. Set extractDocument:false only to request the full image explicitly.

@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.1.1 — 2026-10-21
+
+- Add the public AresEdge documentation and support repository to published package metadata.
+- Restore the Mac runner’s prior pub.dev authentication after short-lived publishing credentials are removed.
+
+- Encode website-only editor screenshots as WebP while retaining PNG assets for the published package and public documentation repository.
+
+- Recover authenticated same-tag pre-upload build retries and document the reviewed dependency cache used by the Mac release runner.
+
+AresEdge v2.1.1
+
 ## 2.1.0 — 2026-10-21
 
 - Preserve store-delivered model packaging for owner apps using the same compiled customer core; standard customer apps bundle the encrypted model by default.
