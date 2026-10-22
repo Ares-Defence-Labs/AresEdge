@@ -2,6 +2,8 @@
 
 # AresEdge
 
+[Official website](https://aresdefencelabs.com/) · [GitHub repository](https://github.com/Ares-Defence-Labs/AresEdge) · [Developer documentation](https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview)
+
 > **Commercial SDK — paid licence required for production use.**
 > AresEdge is proprietary software from Ares Defence Labs. Developers are free
 > to trial the SDK for evaluation. Without a valid licence, the SDK deactivates
@@ -20,9 +22,13 @@ capture and perspective-corrected image cropping for Android and iOS.
 
 Embed a native camera and configurable edge overlay with **AresEdgeEmbedded**, or
 open **AresEdgeScreen** for a minimal back/torch/capture/gallery interface. The
-scanner returns a cropped, perspective-corrected document. Version 2.1.1 opens a basic photo editor by default (`photoEditor: true`); set it to false
+scanner returns a cropped, perspective-corrected document. Version 2.1.3 opens a basic photo editor by default (`photoEditor: true`); set it to false
 for immediate image return. Embed crop/magnifier, drawing, filters, text and adjustments
 individually with a shared editor controller. See [modular image editing](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/image-editor.md).
+
+The public GitHub repository provides documentation, support and a versioned
+package-metadata snapshot (`pubspec.yaml`). Install the compiled SDK from pub.dev;
+the documentation repository does not contain its implementation.
 
 ## Choose your image-editing integration
 
@@ -32,11 +38,31 @@ Embed only the tools your app needs and connect your own navigation and buttons.
 
 **Use the provided UI:** open `AresEdgeScreen` for scanning and its editor, or
 `AresEdgePhotoEditor.open` for an existing image. Ares Defence Labs supplies the
-fixed five-tool activity. Its supported UI customisation is colour codes only;
+fixed five-tool editor activity, whose UI customisation is colour codes only.
+The scanner also supports state hints and a stable-document countdown;
 custom layouts and tool selection belong to the embedded route.
 `photoEditor: false` skips editing and still returns the cropped document.
 
+### 1. Scan a document or card
+
+AresEdge is a complete document scanner: frame the page or card, follow the live
+edge overlay and capture the image. Use `AresEdgeScreen` for the ready-made
+scanner, or `AresEdgeEmbedded` to build your own camera UI.
+
+[![Live document scanning and automatic capture](https://raw.githubusercontent.com/Ares-Defence-Labs/AresEdge/main/media/scanner.webp)](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/scanner-screen.md)
+
+### 2. Refine the crop
+
+After capture, the image opens in the editor. Choose **Crop** to adjust the four
+corners, use the magnifier and straighten the document before continuing.
+
 [![Crop handles and magnifier](https://raw.githubusercontent.com/Ares-Defence-Labs/AresEdge/main/media/editor-cropper.png)](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/cropper.md)
+
+### 3. Edit and return the image
+
+Apply filters, draw, add text or adjust the image, then save the result back to
+your app. You can use the provided editor or compose your own UI from the
+embedded editing components.
 
 [![Filter previews](https://raw.githubusercontent.com/Ares-Defence-Labs/AresEdge/main/media/editor-filters.png)](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/filters.md)
 
@@ -47,14 +73,46 @@ Adjust. AI Tools, OCR/Extract Text shown in the app screenshots are not included
 available through the Text component. See the
 [editor guide](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/image-editor.md).
 
-**Version 2.1.1** includes the scanner, modular editor and provided five-tool activity.
+**Version 2.1.3** includes the scanner, modular editor and provided five-tool activity.
 
 Automatic scanning follows AresScan: hold a confident document steady, watch
-its two-second countdown, and receive the cropped document. Moving the document or
+its configurable countdown (two seconds by default), and receive the cropped document. Moving the document or
 losing reliable detection cancels capture. Set `autoCapture: false` for manual
 shutter control. The embedded widget exposes `onScanStateChanged` so your own UI
 can show the hold/countdown state.
 
+
+### Configure the supplied scanner
+
+The supplied route keeps the SDK layout while allowing scanner colours, state
+hints and the stable-document countdown to be configured:
+
+```dart
+final bytes = await AresEdgeScreen.open(
+  context,
+  licenceKey: configuredKey,
+  options: const AresEdgeOptions(
+    overlayColor: Color(0xFF448AFF),
+    captureTraceColor: Color(0xFFFFD740),
+    captureCountdownSeconds: 3,
+  ),
+  hintBuilder: (state) => switch (state.phase) {
+    'holding' => 'Hold your document steady',
+    'countdown' => 'Taking photo in ${state.remainingSeconds}',
+    'capturing' => 'Preparing your scan…',
+    _ => 'Place a document inside the guide',
+  },
+);
+```
+
+`captureCountdownSeconds` accepts whole seconds from 1 through 10 (default 2).
+It starts after confident, stable detection; movement or stale detection cancels
+it. It is not a maximum session duration and has no effect in manual mode.
+Omit `hintBuilder` to retain the SDK hints, including the manual-capture prompt.
+The builder receives live camera states only; gallery extraction and errors keep
+their separate messages. The same settings work when constructing
+`AresEdgeScreen` directly. Custom layouts belong to `AresEdgeEmbedded`, where
+`onScanStateChanged` supplies the same states for host-owned hints.
 
 ## Overlay appearance and device override
 
@@ -138,7 +196,7 @@ See [performance testing](https://github.com/Ares-Defence-Labs/AresEdge/blob/mai
 matrix, measurement definitions and report-comparison script, and
 [visual demos](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/visual-demos.md) for media sources and feature scope.
 
-**Current release:** [ares_edge 2.1.1](https://pub.dev/packages/ares_edge/versions/2.1.1).
+**Current release:** [ares_edge 2.1.3](https://pub.dev/packages/ares_edge/versions/2.1.3).
 
 - [Installation and quick start](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/getting-started.md)
 - [Embedded camera and custom controls](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/docs/embedded-camera.md)
@@ -201,7 +259,7 @@ Future<void> scanDocument(BuildContext context) async {
 
 The screen includes back, flashlight, capture and gallery controls. Capturing or
 selecting an image returns its detected document, cropped and perspective-corrected,
-in the direct-return path. In the local 2.1.1 API, the default path opens the image editor first with a cropped preview. Tap Crop
+in the direct-return path. In the 2.1.3 API, the default path opens the image editor first with a cropped preview. Tap Crop
 to adjust detected corners over the retained full photo, with a drag magnifier
 and Retake / Detect / Done controls. Set
 `photoEditor: false` to return the cropped image immediately. Saving the editor
@@ -301,7 +359,7 @@ licence. See [LICENSE](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/L
 Both camera capture and gallery import extract the detected document by default.
 The native core crops to the four detected corners, corrects perspective and
 returns compressed image bytes. `AresEdgeEmbedded` returns these directly;
-`AresEdgeScreen` opens its basic editor by default in the local 2.1.1 API.
+`AresEdgeScreen` opens its basic editor by default in the 2.1.3 API.
 Set `photoEditor: false` for direct cropped return. A missing usable boundary reports `DOCUMENT_NOT_FOUND`, so your app
 can ask the user to align the document and try again.
 
@@ -316,7 +374,7 @@ own processing. This flag is independent of `photoEditor`.
 
 Use `package:ares_edge/ares_edge.dart` for `AresEdgeEmbedded`, `AresEdgeScreen`,
 `AresEdgeController`, `AresEdgeOptions`, `AresEdgeImage`, `AresEdgeScanState`,
-`AresEdgePerformance`, `AresEdgeQuality` and `AresEdgeShape`. The local 2.1.1 API
+`AresEdgePerformance`, `AresEdgeQuality` and `AresEdgeShape`. The 2.1.3 API
 also exposes the documented `AresEdgeEditorController`, options/modes/filter types,
 `AresEdgePhotoEditor`, `AresEdgeCropper`, `AresEdgeDrawing`, `AresEdgeFilters`, `AresEdgeText` and
 `AresEdgeAdjustments`. Legacy owner cropper/editor classes, activation helpers
@@ -325,4 +383,4 @@ See the [API reference](https://github.com/Ares-Defence-Labs/AresEdge/blob/main/
 
 ### Complete filter catalogue
 
-The 2.1.1 editor includes all 37 AresScan presets, plus Sepia. Discover available filters through `AresEdgeFilter.aresScanPresets` or `AresEdgeFilter.values`, and configure strength, preset parameters and custom LUTs. See the [filter reference](docs/filters.md).
+The 2.1.3 editor includes all 37 AresScan presets, plus Sepia. Discover available filters through `AresEdgeFilter.aresScanPresets` or `AresEdgeFilter.values`, and configure strength, preset parameters and custom LUTs. See the [filter reference](docs/filters.md).

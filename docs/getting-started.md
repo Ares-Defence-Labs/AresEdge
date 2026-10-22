@@ -19,7 +19,7 @@ Install the published Flutter package from pub.dev:
 dependencies:
   flutter:
     sdk: flutter
-  ares_edge: ^2.1.1
+  ares_edge: ^2.1.3
 ```
 
 Run `flutter pub get`. Configure [Android and iOS](platforms.md) before launching.
@@ -28,7 +28,7 @@ hosted dependency above rather than a Git dependency on that repository.
 
 Use the single public import `package:ares_edge/ares_edge.dart`. The nine
 [scanning API types](api-reference.md#public-api-boundary) remain available.
-The 2.1.1 API adds the [modular editor](image-editor.md); legacy owner
+The 2.1.3 API includes the [modular editor](image-editor.md); legacy owner
 cropper/editor classes and internal adapters remain private.
 
 ## Ready-made scanner
@@ -52,7 +52,7 @@ Future<void> scan(BuildContext context) async {
 ```
 
 Capture or gallery selection returns cropped, perspective-corrected document
-bytes. In 2.1.1, `photoEditor` defaults to true and opens
+bytes. In 2.1.3, `photoEditor` defaults to true and opens
 the basic editor before return. Set it to false for direct cropped output. Cancellation or trial expiry returns null. The
 result has no SDK-managed persistent file.
 

@@ -11,7 +11,8 @@ Color overlayColor = const Color(0xFF00FFD1),
 Color gridColor = const Color(0x47FFFFFF), Color? captureTraceColor,
 AresEdgeQuality quality =
 AresEdgeQuality.balanced, AresEdgeShape shape = AresEdgeShape.rectangle,
-bool autoCapture = true, bool flashEnabled = false, bool extractDocument = true,
+bool autoCapture = true, int captureCountdownSeconds = 2,
+bool flashEnabled = false, bool extractDocument = true,
 int maxDocumentDimension = 1600})`
 
 | Property | Meaning |
@@ -23,7 +24,8 @@ int maxDocumentDimension = 1600})`
 | captureTraceColor | Capture-countdown border trace ARGB colour, including alpha. Null follows overlayColor at the default trace opacity; transparent hides it. |
 | quality | Requested analysis detail/resolution; device capability still applies. |
 | shape | Detection/crop geometry. |
-| autoCapture | AresScan capture hold and two-second countdown by default; false selects manual capture. |
+| autoCapture | Capture after confident detection and the configured countdown; false selects manual capture. |
+| captureCountdownSeconds | Stable-document countdown in whole seconds, 1–10; default 2. Motion or stale detections cancel it. |
 | flashEnabled | Initial torch request; a changed value on rebuild updates the torch. |
 
 `AresEdgeQuality`: `low`, `balanced`, `high`.
@@ -80,14 +82,16 @@ toolbar/editor/navigation. Requires bounded constraints. Lifecycle-managed.
 `const AresEdgeScreen({Key? key, String? licenceKey, AresEdgeOptions options =
 const AresEdgeOptions(),
 ValueChanged<Uint8List?>? onComplete, ValueChanged<String>? onError,
-ValueChanged<AresEdgePerformance>? onPerformance, bool photoEditor = true,
+ValueChanged<AresEdgePerformance>? onPerformance,
+String Function(AresEdgeScanState state)? hintBuilder, bool photoEditor = true,
 AresEdgeEditorColors editorColors = const AresEdgeEditorColors()})`
 
 | Member | Contract |
 | --- | --- |
 | licenceKey | Same signed offline key as embedded. |
-| options | Same immutable camera configuration. |
-| photoEditor | True opens the five-mode editor; false returns cropped bytes immediately. Local 2.1.1 API. |
+| options | Same immutable camera configuration, including overlay/trace colours and countdown duration. |
+| hintBuilder | Optional live camera hint for searching, holding, countdown and capturing. Receives phase and remainingSeconds; null retains SDK prompts. Gallery/error messages are separate. |
+| photoEditor | True opens the five-mode editor; false returns cropped bytes immediately. Local 2.1.3 API. |
 | editorColors | Palette for the fixed five-tool activity. See image-editor.md for all colour roles. |
 | onComplete | Optional callback, called once. Without it the route pops. Null indicates cancel/expiry. |
 | onError | Reports failures, also shown on screen. |
@@ -95,7 +99,8 @@ AresEdgeEditorColors editorColors = const AresEdgeEditorColors()})`
 
 `static Future<Uint8List?> open(BuildContext context, {String? licenceKey,
 AresEdgeOptions options = const AresEdgeOptions(),
-ValueChanged<AresEdgePerformance>? onPerformance, bool photoEditor = true,
+ValueChanged<AresEdgePerformance>? onPerformance,
+String Function(AresEdgeScanState state)? hintBuilder, bool photoEditor = true,
 AresEdgeEditorColors editorColors = const AresEdgeEditorColors()})`
 opens a fullscreen-dialog Flutter route. Await edited PNG bytes (default),
 immediate captured/cropped bytes (`photoEditor: false`), or null.
@@ -150,7 +155,7 @@ The native channel adapter is a library-private Dart part. It cannot be imported
 as a separate library and its classes cannot be referenced from consumer code.
 There is no customer compatibility `Edge*` library, activation service API,
 `QuadFrame`, legacy CropperPage/EdgePhotoEditor, identity parser or owner implementation API.
-The 2.1.1 public editor types are documented below and in the editor guide.
+The 2.1.3 public editor types are documented below and in the editor guide.
 Document extraction remains internal; it does not require an exposed cropper.
 Pass the purchased licence key through the camera/screen configuration.
 
@@ -173,7 +178,7 @@ perspective-corrected without an editor route. Missing geometry reports
 Circular extraction returns PNG with transparent corners; rectangular extraction
 normally returns JPEG. Output orientation is upright with the crop applied.
 
-## Modular editor — 2.1.1
+## Modular editor — 2.1.3
 
 `AresEdgeScreen` adds `photoEditor = true` and `editorColors`. `AresEdgeEmbedded`
 keeps returning captured images directly; your own UI decides whether to edit.
@@ -183,7 +188,7 @@ Public editing types: `AresEdgeEditorMode`, `AresEdgeFilter`, `AresEdgeEditorOpt
 `AresEdgeAdjustments`, and `AresEdgePhotoEditor`. See [the editor guide](image-editor.md)
 for constructors, shared session ownership, tool options, commands, output,
 limits, error handling and offline licence/trial behaviour. All public members
-also have Dart API comments. Versions 2.0.x provide scanning; upgrade to 2.1.1 for these editor APIs.
+also have Dart API comments. Versions 2.0.x provide scanning; upgrade to 2.1.3 for these editor APIs.
 
 With `photoEditor: true`, the SDK activity retains the full captured photo and
 opens the image editor first with a cropped preview. Selecting Crop restores
@@ -203,7 +208,8 @@ Embedded components are selected by placing `AresEdgeCropper`, `AresEdgeDrawing`
 `AresEdgeFilters`, `AresEdgeText` and/or `AresEdgeAdjustments` around one shared
 controller. The host owns composition, navigation and surrounding controls.
 `AresEdgeScreen` and `AresEdgePhotoEditor` provide the fixed activity UI: all five
-tools, SDK-defined layout and navigation, colour customisation only.
+tools, SDK-defined layout and navigation, with editor colour customisation.
+The scanner also allows state hints and countdown duration; see [scanner settings](scanner-screen.md#configure-the-supplied-scanner).
 
 Activity routes accept `AresEdgeEditorColors` only. Embedded sessions accept
 `AresEdgeEditorOptions`, while each component exposes `showControls` for host-owned

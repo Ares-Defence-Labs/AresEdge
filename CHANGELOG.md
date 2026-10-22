@@ -1,5 +1,33 @@
 # Changelog
 
+## 2.1.3 — 2026-10-22
+
+- Refresh installation examples and current-version documentation for AresEdge 2.1.2.
+
+- Add scanner and precision-crop screenshots to the pub.dev listing and keep final dry-run generated files separate from the verified upload snapshot.
+
+- Configure supplied Edge scanner state hints with `AresEdgeScreen.hintBuilder`, alongside overlay colours and the bounded 1–10 second stable-document countdown.
+
+- Prefer precise iOS model corners and explicit confidence independently of output dictionary order; use heatmaps only as fallback.
+
+- Retire camera ownership explicitly on widget disposal and let queued iOS scanner routes acquire a released camera without stealing an active session.
+
+- Support a bounded native stable-document capture countdown (1–10 seconds) for supplied and embedded Identity scanner integrations without changing confidence, motion, freshness or licensing checks.
+
+- Keep iOS neural detection running through automatic capture countdowns and request the photo only after freshness and motion checks succeed, preventing early snapshot pauses from restarting countdowns.
+
+- Prepare authenticated encrypted scanner models from owner store delivery only after native permanent-admin verification, exact model hash validation and atomic private-cache installation.
+
+- Move identity scanner components into the private AresIdentity SDK, retain shared redaction helper imports, and add product-scoped Identity camera licensing.
+
+
+
+- Add the public AresEdge documentation and support repository to published package metadata.
+
+- Validate the queued licence-expiry delivery fence using an authenticated model fixture, keeping production model authentication and expiry checks unchanged.
+
+AresEdge v2.1.3
+
 ## 2.1.1 — 2026-10-21
 
 - Add the public AresEdge documentation and support repository to published package metadata.

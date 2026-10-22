@@ -106,7 +106,8 @@ auto-capture. Changing key, analysis quality or shape can restart native capture
 ### Scan state and automatic capture
 
 Automatic capture is enabled by default. Like AresScan, continuous tracking
-requires 1.5 seconds of confident detection before a two-second countdown.
+requires 1.5 seconds of confident detection before the configured countdown
+(`captureCountdownSeconds`, whole seconds 1–10, default 2).
 Motion cancels an armed countdown; motion tracking alone cannot confirm capture.
 The device fallback uses repeated settled detections and shows its fixed outline
 during the countdown. Manual shutter capture remains available in either mode.
@@ -141,5 +142,6 @@ maximum output side with `maxDocumentDimension` (default 1600, range 256–4096)
 Embedded capture delivers the image to your callback. Your app can then create
 one editor controller and embed only Crop, Draw, Filters, Text or Adjust widgets.
 You own the layout and navigation. Alternatively open `AresEdgePhotoEditor.open`
-for the Ares Defence Labs fixed activity UI with colour customisation only.
+for the Ares Defence Labs fixed activity UI with configurable colours, state hints
+and stable-document countdown. See [supplied scanner settings](scanner-screen.md#configure-the-supplied-scanner).
 See [editor integrations](image-editor.md) and [cropper/magnifier](cropper.md).

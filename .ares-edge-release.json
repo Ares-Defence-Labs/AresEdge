@@ -1,7 +1,7 @@
 {
-  "version": "2.1.1",
-  "manifest": "da531258954466afb46ec2d252600f063ff7da62e13da20855aa2b3f7c7f88d3",
-  "packageArchiveSha256": "15eacc931757516afb8c6dfd05d24727bd976222b24f9566fd62e2bf009c0585",
+  "version": "2.1.3",
+  "manifest": "77104b5706e8a4288e6c7e93aaa55f9c4195e0cf165c336142458f7da7af72e5",
+  "packageArchiveSha256": "7f87923962d40e39d8f416fafe1617ce79a10850d45dc751199a4ff7f7348c87",
   "files": [
     "CHANGELOG.md",
     "LICENSE",
@@ -34,6 +34,7 @@
     "media/editor-text.png",
     "media/scanner.webp",
     "media/scanning-demo.gif",
-    "media/scanning-demo.mp4"
+    "media/scanning-demo.mp4",
+    "pubspec.yaml"
   ]
 }
