@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-- Clarify embedded composition versus fixed colour-customisable activity UI; add cropper, filter and text workflow screenshots and document candidate API gaps before release.
+- Separate fixed activity colours from embedded component/session options; add cropper, filter and text workflow screenshots.
+- Add portable typography controls, host-owned component toolbars, crop/stroke/colour-matrix commands, and bounded undo/redo.
+- Route AresScan’s existing filter, adjustment and crop controls through the shared licensed native editor without replacing its owner UI.
 
 - Build the native filter core with 16 KiB ELF/RELRO alignment and reject misaligned Android customer binaries during package validation.
 

@@ -19,7 +19,7 @@ late final editor = AresEdgeEditorController(
   imageBytes: widget.imageBytes,
   licenceKey: const String.fromEnvironment('ARES_EDGE_LICENCE'),
   options: const AresEdgeEditorOptions(
-    cropColor: Color(0xFF79FFE1),
+    colors: AresEdgeEditorColors(crop: Color(0xFF79FFE1)),
     showMagnifier: true,
     magnifierZoom: 2.2,
     magnifierDiameter: 112,
@@ -66,8 +66,7 @@ captured photo so the user can expand the detected selection.
 
 The activity layout, tool order, magnifier and navigation are SDK-owned. Its
 supported UI customisation is colour codes only. Use the embedded cropper for
-custom composition or component settings. The unpublished candidate’s broader
-activity-option overrides are being restricted before release; see the
+custom composition or component settings. The activity accepts only `AresEdgeEditorColors` for editor appearance; see the
 [integration contract](image-editor.md#choose-how-to-integrate).
 
 `photoEditor: false` skips the editor and cropper pages but still returns a
@@ -77,3 +76,7 @@ output. `extractDocument: false` is the separate explicit full-frame option.
 The screenshot illustrates the AresScan+ crop interaction; SDK pages keep their
 own fixed presentation. See [image editor](image-editor.md) for licence/trial,
 image limits, lifecycle, save/cancel semantics and the embedded/activity split.
+
+Set `showControls: false` to embed only the interactive crop canvas and magnifier.
+Connect your own Detect/Done/Reset buttons to the controller. `setCropCorners`
+accepts four normalized TL/TR/BR/BL points; invalid or crossed quads are rejected.
