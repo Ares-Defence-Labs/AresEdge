@@ -1,6 +1,51 @@
 # Changelog
 
-## Unreleased
+## 2.1.3 — 2026-10-22
+
+- Refresh installation examples and current-version documentation for AresEdge 2.1.2.
+
+- Add scanner and precision-crop screenshots to the pub.dev listing and keep final dry-run generated files separate from the verified upload snapshot.
+
+- Configure supplied Edge scanner state hints with `AresEdgeScreen.hintBuilder`, alongside overlay colours and the bounded 1–10 second stable-document countdown.
+
+- Prefer precise iOS model corners and explicit confidence independently of output dictionary order; use heatmaps only as fallback.
+
+- Retire camera ownership explicitly on widget disposal and let queued iOS scanner routes acquire a released camera without stealing an active session.
+
+- Support a bounded native stable-document capture countdown (1–10 seconds) for supplied and embedded Identity scanner integrations without changing confidence, motion, freshness or licensing checks.
+
+- Keep iOS neural detection running through automatic capture countdowns and request the photo only after freshness and motion checks succeed, preventing early snapshot pauses from restarting countdowns.
+
+- Prepare authenticated encrypted scanner models from owner store delivery only after native permanent-admin verification, exact model hash validation and atomic private-cache installation.
+
+- Move identity scanner components into the private AresIdentity SDK, retain shared redaction helper imports, and add product-scoped Identity camera licensing.
+
+
+
+- Add the public AresEdge documentation and support repository to published package metadata.
+
+- Validate the queued licence-expiry delivery fence using an authenticated model fixture, keeping production model authentication and expiry checks unchanged.
+
+AresEdge v2.1.3
+
+## 2.1.1 — 2026-10-21
+
+- Add the public AresEdge documentation and support repository to published package metadata.
+- Restore the Mac runner’s prior pub.dev authentication after short-lived publishing credentials are removed.
+
+- Encode website-only editor screenshots as WebP while retaining PNG assets for the published package and public documentation repository.
+
+- Recover authenticated same-tag pre-upload build retries and document the reviewed dependency cache used by the Mac release runner.
+
+AresEdge v2.1.1
+
+## 2.1.0 — 2026-10-21
+
+- Preserve store-delivered model packaging for owner apps using the same compiled customer core; standard customer apps bundle the encrypted model by default.
+
+- Verify the company publisher independently of source repository metadata and retain the requested editor version across pre-allocation corrective pushes.
+
+- Enable main-push release allocation, macOS native builds, pub.dev publication and documentation-only GitHub releases for the modular editor release.
 
 - Separate fixed activity colours from embedded component/session options; add cropper, filter and text workflow screenshots.
 - Add portable typography controls, host-owned component toolbars, crop/stroke/colour-matrix commands, and bounded undo/redo.
@@ -25,7 +70,7 @@
 
 - Align ready-made scanner/editor pages and native embedded controls with the AresScan mint palette, rounded tool docks and light/dark surfaces.
 
-- Add a local, unpublished modular native photo editor with crop/magnifier, drawing, filters and tonal adjustments.
+- Add a modular native photo editor with crop/magnifier, drawing, filters and tonal adjustments.
 - Open the editor by default from the scanner; allow developers to skip it or embed individual editing components.
 
 - Verify the commercial customer package against pub.dev scoring conventions without exposing private SDK source.

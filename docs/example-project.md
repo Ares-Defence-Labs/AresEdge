@@ -18,7 +18,7 @@ Provide the licence in your own build configuration; no real key is included.
 Without a key you can test the shared 60-second process trial. Use a physical
 device for camera acceptance and profile mode for benchmarking.
 
-The hosted 2.0.x example is scanner-only. The local 2.1.0 example adds the fixed
+The 2.1.3 example includes the fixed
 activity editor and independently embedded Crop, Draw, Filters, Text and Adjust
 components. The activity opens its editor by default; `photoEditor: false` returns
 the cropped image directly. Use embedded components for custom tool selection

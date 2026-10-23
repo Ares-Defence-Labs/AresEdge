@@ -1,7 +1,19 @@
 # Image cropper and magnifier
 
-Local, unpublished AresEdge 2.1.0 candidate. Import
+Available in AresEdge **2.1.3**. Import
 `package:ares_edge/ares_edge.dart`.
+
+## Scan first
+
+Capture the document or card with `AresEdgeScreen`, or use `AresEdgeEmbedded`
+inside your own camera UI. The live overlay follows the document boundaries.
+With `photoEditor: true`, capture opens the editor; select **Crop** to refine the
+corners and perspective. Set `photoEditor: false` to return the automatically
+cropped image directly to your app.
+
+[![Scan a document before refining its crop](../media/scanner.webp)](scanner-screen.md)
+
+## Adjust the crop
 
 [![Perspective crop handles with dashed grid and magnifier](../media/editor-cropper.png)](../media/editor-cropper-full.png)
 

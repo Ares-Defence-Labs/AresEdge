@@ -6,8 +6,9 @@
 - Android minSdk 24, Java 17. Use the compileSdk minimum specified by your supplied
   customer artifact's BINARY_DISTRIBUTION.md (the current reviewed AAR requires 36).
   The current example uses Android Gradle Plugin 9.1.1, Gradle 9.3.1 and Kotlin 2.4.0.
-- iOS 16+ with Xcode/CocoaPods appropriate to your Flutter release. Set
-  `platform :ios, '16.0'` in the host Podfile.
+- iOS 16+ with Xcode appropriate to your Flutter release. Swift Package Manager
+  and CocoaPods integrations are supplied. CocoaPods hosts should set
+  `platform :ios, '16.0'` in the Podfile.
 - Android and iOS only; no web/desktop camera implementation is supplied.
 
 The SDK requests Android camera permission at runtime; its core manifest declares
@@ -29,6 +30,26 @@ activity recreation, image_picker can report lost data; apps with their own
 embedded gallery workflow should follow image_picker's retrieveLostData guidance.
 The ready-made screen does not promise recovery of an in-progress scan after the
 OS destroys the app Activity; start a fresh scan in that case.
+
+## Swift Package Manager
+
+Flutter discovers `ios/ares_edge/Package.swift` automatically. The `ares-edge`
+product contains the public registration bridge and compiled SDK/ONNX Objective-C
+XCFrameworks. The ONNX Runtime C binary is downloaded from Microsoft's official
+server at the pinned version and SHA-256 checksum; no private repository access
+is required. Flutter supplies its generated `FlutterFramework` dependency.
+
+Encrypted model resources and the privacy manifest are bundled by SwiftPM.
+CocoaPods remains supported using the same SDK core and runtime version. Use one
+integration method per plugin; do not manually link a second copy of the core or
+ONNX Runtime. Initial SwiftPM resolution needs network access; offline SDK licence
+validation and scanning do not make licensing-service requests.
+
+For store-delivered models, set `EDGE_DETECTION_BUNDLE_MODEL=false` in the
+build environment before resolving Swift packages, then clean/re-resolve after
+changing it. This excludes model resources; the host must supply its store model
+through its supported owner integration. Standard customer apps should leave the
+setting unset. No licence keys belong in `Package.swift`.
 
 ## Model packaging
 

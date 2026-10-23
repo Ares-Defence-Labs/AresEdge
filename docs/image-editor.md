@@ -1,7 +1,7 @@
-# Image editor: embedded components or activity route (2.1.0 candidate)
+# Image editor: embedded components or activity route (2.1.3)
 
-This API is being prepared locally. It is not available in the published 2.0.x
-package yet. Use the rebuilt local customer package to evaluate it.
+Available in AresEdge **2.1.3** for Android and iOS. Install `ares_edge: ^2.1.3`
+to use the scanner and modular native editor.
 
 ## Choose how to integrate
 

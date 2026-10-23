@@ -1,0 +1,9 @@
+{
+  "name": "ares_edge",
+  "version": "2.1.3",
+  "description": "Commercial Flutter document scanner and modular image editor for Android and iOS.",
+  "homepage": "https://aresdefencelabs.com/",
+  "repository": "https://github.com/Ares-Defence-Labs/AresEdge",
+  "issue_tracker": "https://github.com/Ares-Defence-Labs/AresEdge/issues",
+  "documentation": "https://aresdefencelabs.com/development-sdks?sdk=edge-detection&view=overview"
+}
