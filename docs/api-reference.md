@@ -91,7 +91,7 @@ AresEdgeEditorColors editorColors = const AresEdgeEditorColors()})`
 | licenceKey | Same signed offline key as embedded. |
 | options | Same immutable camera configuration, including overlay/trace colours and countdown duration. |
 | hintBuilder | Optional live camera hint for searching, holding, countdown and capturing. Receives phase and remainingSeconds; null retains SDK prompts. Gallery/error messages are separate. |
-| photoEditor | True opens the five-mode editor; false returns cropped bytes immediately. Local 2.1.3 API. |
+| photoEditor | True opens the five-mode editor; false returns cropped bytes immediately. Local 2.1.5 API. |
 | editorColors | Palette for the fixed five-tool activity. See image-editor.md for all colour roles. |
 | onComplete | Optional callback, called once. Without it the route pops. Null indicates cancel/expiry. |
 | onError | Reports failures, also shown on screen. |
@@ -155,7 +155,7 @@ The native channel adapter is a library-private Dart part. It cannot be imported
 as a separate library and its classes cannot be referenced from consumer code.
 There is no customer compatibility `Edge*` library, activation service API,
 `QuadFrame`, legacy CropperPage/EdgePhotoEditor, identity parser or owner implementation API.
-The 2.1.3 public editor types are documented below and in the editor guide.
+The 2.1.5 public editor types are documented below and in the editor guide.
 Document extraction remains internal; it does not require an exposed cropper.
 Pass the purchased licence key through the camera/screen configuration.
 
@@ -178,7 +178,7 @@ perspective-corrected without an editor route. Missing geometry reports
 Circular extraction returns PNG with transparent corners; rectangular extraction
 normally returns JPEG. Output orientation is upright with the crop applied.
 
-## Modular editor — 2.1.3
+## Modular editor — 2.1.5
 
 `AresEdgeScreen` adds `photoEditor = true` and `editorColors`. `AresEdgeEmbedded`
 keeps returning captured images directly; your own UI decides whether to edit.
@@ -188,7 +188,7 @@ Public editing types: `AresEdgeEditorMode`, `AresEdgeFilter`, `AresEdgeEditorOpt
 `AresEdgeAdjustments`, and `AresEdgePhotoEditor`. See [the editor guide](image-editor.md)
 for constructors, shared session ownership, tool options, commands, output,
 limits, error handling and offline licence/trial behaviour. All public members
-also have Dart API comments. Versions 2.0.x provide scanning; upgrade to 2.1.3 for these editor APIs.
+also have Dart API comments. Versions 2.0.x provide scanning; upgrade to 2.1.5 for these editor APIs.
 
 With `photoEditor: true`, the SDK activity retains the full captured photo and
 opens the image editor first with a cropped preview. Selecting Crop restores

@@ -1,6 +1,6 @@
 # Image cropper and magnifier
 
-Available in AresEdge **2.1.3**. Import
+Available in AresEdge **2.1.5**. Import
 `package:ares_edge/ares_edge.dart`.
 
 ## Scan first

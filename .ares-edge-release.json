@@ -1,7 +1,7 @@
 {
-  "version": "2.1.3",
-  "manifest": "77104b5706e8a4288e6c7e93aaa55f9c4195e0cf165c336142458f7da7af72e5",
-  "packageArchiveSha256": "7f87923962d40e39d8f416fafe1617ce79a10850d45dc751199a4ff7f7348c87",
+  "version": "2.1.5",
+  "manifest": "11007a74fe3614959e83de8464907d88dbb2cfb4c4a5e3efd46653a5a4f924cd",
+  "packageArchiveSha256": "1a240c0b1d27e677b9bf78bc02dabbbac0f76cb64e14244700356e11c03ba184",
   "files": [
     "CHANGELOG.md",
     "LICENSE",

@@ -1,6 +1,6 @@
-# Image editor: embedded components or activity route (2.1.3)
+# Image editor: embedded components or activity route (2.1.5)
 
-Available in AresEdge **2.1.3** for Android and iOS. Install `ares_edge: ^2.1.3`
+Available in AresEdge **2.1.5** for Android and iOS. Install `ares_edge: ^2.1.5`
 to use the scanner and modular native editor.
 
 ## Choose how to integrate

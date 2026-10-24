@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.5 — 2026-10-24
+
+- Archive the AresEdge developer signing and security guide, its source references, and the published-package offline/network audit evidence in the private source repository.
+- Clean up unused legacy editor imports and standardise editor error-message formatting without changing scanner or editor behaviour.
+- Stop tracking machine-generated Dart tooling caches so local dependency state and build locks stay out of source changes.
+
+- Resolve CI customer examples from the previously reviewed dependency lock instead of selecting newer versions from the shared cache; reuse the verified lock for SwiftPM acceptance builds.
+
+AresEdge v2.1.5
+
 ## 2.1.3 — 2026-10-22
 
 - Refresh installation examples and current-version documentation for AresEdge 2.1.2.
